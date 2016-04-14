@@ -15,6 +15,8 @@ import mvc.fileUpload.MultipartFile;
 import mvc.view.HtmlView;
 import mvc.view.JsonView;
 import mvc.view.ModelAndView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,8 @@ import mvc.annotation.*;
 //如果需要把controller层中的bean交给spring管理  必须添加controller获取其他相关的注解
 @Controller
 public class PrizeDetailController {
+	private static Logger logger = LoggerFactory.getLogger(PrizeDetailController.class);
+
 	//使用spring的自动注入 从配置文件（config.properties）中注入pageSize的值
 	@Value("${pageSize}")
 	int pageSize;
@@ -50,16 +54,13 @@ public class PrizeDetailController {
 
 	@RequestMapping(type = "get", url = "/getAll")
 	public ModelAndView getAllPrizeDetail(HttpServletRequest request){
-		//Object controllerInstance = WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext()).getBean("prizeDetailController1");
-		//System.out.print("controllerInstance:"+controllerInstance);
 		HashMap<String,Object> map = new HashMap<String,Object>();//pageSize
-		System.out.println("pageSize:"+pageSize);
-		System.out.println("prizeDetailDAO:"+prizeDetailDAO);
+		logger.info("pageSize:"+pageSize);
+		logger.info("prizeDetailDAO:"+prizeDetailDAO);
 		map.put("value", prizeDetailDAO.getPrizeDetailByMap(map));
 		JsonView jsonView = new JsonView(map);
 		return jsonView;
 	}
-	//deleteById
 	@RequestMapping(type = "get", url = "/deleteById")
 	public ModelAndView deleteById(String id){
 		HashMap<String,Object> map = new HashMap<String,Object>();
@@ -70,6 +71,10 @@ public class PrizeDetailController {
 		else
 			return new JsonView(false);
 	}
+	@RequestMapping(type = "post", url = "/PrizeServer/addPrizeDetail")
+	public void test(){
+
+	}
 	/**
 	 * 学生提交获奖信息
 	 * @param prizeDetail
@@ -77,48 +82,40 @@ public class PrizeDetailController {
 	 * @param request
 	 * @return
 	 */
-	//addPrizeDetail
 	@RequestMapping(type = "post", url = "/PrizeServer/addPrizeDetail")
 	public ModelAndView addPrizeDetail(PrizeDetail prizeDetail, MultipartFile[] file, HttpServletRequest request){
-		System.out.println("request.getParameter(academy)"+request.getParameter("academy"));
+		//手动生成prize信息id
 		String id = UUIDUtil.getUUIDString();
+		//获取当前时间
 		String submit_time = TimeUtil.getStringTime();
-		System.out.println("submit_time"+submit_time);
-		System.out.println("生成的uuid:"+id);
-
+		logger.info("submit_time"+submit_time);
+		logger.info("生成的uuid:"+id);
 		prizeDetail.prize_id = id;
-		
-		System.out.println("prizedetail:"+prizeDetail);
-		
+		logger.info("prizedetail:"+prizeDetail);
 		List<TermInfo> terms = termInfoDAO.getAllTermInfo();
     	for (TermInfo termInfo : terms) {
 			try {
 				if(TimeUtil.checkTerm(termInfo.term_begin_time,termInfo.term_end_time)){
-					System.out.println("当前学期为:"+termInfo.term_name);
+					logger.info("当前学期为:"+termInfo.term_name);
 					prizeDetail.term_name =termInfo.term_name;
 					break;
 				}
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-				System.out.println("数据库学期时间错误");
+				logger.error("数据库学期时间错误");
 				return new HtmlView("redirect:/files/app/index.html?result=failed");
 			}
 		}
 		if(prizeDetail.term_name==null||"".equals(prizeDetail.term_name))
 			return new HtmlView("redirect:/files/app/index.html?result=failed");
-		//prizeDetail.works_name = "1";
 		prizeDetail.submit_time = submit_time;
 		//设置处理状态为审核中
 		prizeDetail.handle_result = "waiting";
 		prizeDetailDAO.addPrizeDetail(prizeDetail);
-		
-		
 		for (MultipartFile multipartFile : file) {
 			if(multipartFile.getFileSize()>0){
 				try {
 					Integer random_number = new Random().nextInt(1000);
-					System.out.println("random_number:"+random_number);
 					//如果文件夹不存在 新建images文件夹
 					File directory =new File(request.getSession().getServletContext().getRealPath("/")+"images");
 					if  (!directory .exists()  && !directory .isDirectory())
@@ -135,13 +132,11 @@ public class PrizeDetailController {
 					info.file_name = multipartFile.getFileItem().getName();
 					info.file_path = random_number+"_"+time+".jpg";
 					info.file_prize_id = id;
-					System.out.println("info:"+info);
 					if(fileInfoDAO.addFileInfo(info)!=1){
-						System.out.println("文件记录插入错误");
+						logger.error("文件记录插入错误");
 					}
 					out.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -171,7 +166,7 @@ public class PrizeDetailController {
 				}
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
-				System.out.println("数据库学期时间错误");
+				logger.error("数据库学期时间错误");
 				e.printStackTrace();
 			}
 		}
@@ -202,7 +197,6 @@ public class PrizeDetailController {
 	 * 获取所有的学期信息和奖项类型信息
 	 * @return
 	 */
-	//getAllTermInfoAndPrizeInfo
 	@RequestMapping(type = "get", url = "/PrizeServer/getAllTermInfoAndPrizeInfo")
 	public ModelAndView getAllTermInfo(){
 		Map<String,Object> returnMap = new HashMap<String,Object>();
@@ -219,10 +213,9 @@ public class PrizeDetailController {
 	 * @param currentPage
 	 * @return
 	 */
-	//getUnCheckedPrize
 	@RequestMapping(type = "post", url = "/PrizeServer/getUnCheckedPrize")
 	public ModelAndView getUnCheckedPrize(String currentPage, PrizeDetail prizeDetail, HttpServletRequest request){
-		System.out.println("prizeDetail1:"+prizeDetail);
+		logger.info("prizeDetail1:"+prizeDetail);
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		prizeDetail.handle_result="waiting";
 		//prizeDetail.handle_result="审核通过";
@@ -234,13 +227,10 @@ public class PrizeDetailController {
 				}
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
-				System.out.println("数据库学期时间错误");
+				logger.error("数据库学期时间错误");
 				e.printStackTrace();
 			}
 		}
-		System.out.println("ccccccccccccccccccccccc");
-		System.out.println("prizeDetail:"+prizeDetail);
-		//prizeDetail.term_name = TimeUtil.checkTerm(begin, end);
 		map.put("prizeDetail", prizeDetail);
 		map.put("begin", new Integer(pageSize)*(new Integer(currentPage)-1));
 		map.put("length",pageSize);
@@ -258,12 +248,7 @@ public class PrizeDetailController {
 		map.put("prizeList", prizeList);
 		map.put("totalPage", totalPage);
 		map.put("currentPage",currentPage);
-		/*request.setAttribute("prizeList", prizeList);
-		request.setAttribute("totalPage", totalPage);
-		request.setAttribute("currentPage", currentPage);
-		HttpServletResponse response ;*/
 		return new JsonView(map);
-		//return "forward:/files/app/uncheck.html";
 	}
 	
 	
@@ -273,7 +258,6 @@ public class PrizeDetailController {
 	 * @param prize_id
 	 * @return
 	 */
-	//getPrizeDetailById
 	@RequestMapping(type = "post", url = "/PrizeServer/getPrizeDetailById")
 	public ModelAndView getPrizeDetailById(String prize_id){
 		PrizeDetail prizeDetail =  prizeDetailDAO.getPrizeDetailById(prize_id);
@@ -286,19 +270,17 @@ public class PrizeDetailController {
 	 * @param prizeDetail
 	 * @return
 	 */
-	//passPrize
 	@RequestMapping(type = "post", url = "/PrizeServer/passPrize")
 	public ModelAndView passPrize(PrizeDetail prizeDetail){
-		//prizeDetail.handle_result = "审核通过";
 		prizeDetail.handle_time = TimeUtil.getStringTime();
 		if(prizeDetail.prize_price==null)
 			prizeDetail.prize_price = "0";
 		if(prizeDetailDAO.updatePrizeDetail(prizeDetail)==1){
-			System.out.println("获奖信息更新成功");
+			logger.info("获奖信息更新成功");
 			return new HtmlView("/files/app/checkInfo.html?result=success");
 		}
 		else{
-			System.out.println("获奖信息更新失败");
+			logger.error("获奖信息更新失败");
 			return new HtmlView("/files/app/checkInfo.html?result=failed");
 		}
 	}
@@ -309,7 +291,6 @@ public class PrizeDetailController {
 	 * @param termInfo
 	 * @return
 	 */
-	//addTermInfo
 	@RequestMapping(type = "post", url = "/PrizeServer/addTermInfo")
 	public HtmlView addTermInfo(TermInfo termInfo){
 		String id  = UUIDUtil.getUUIDString();
@@ -343,7 +324,6 @@ public class PrizeDetailController {
 	 * @param term_id
 	 * @return
 	 */
-	//deleteTermInfo
 	@RequestMapping(type = "get", url = "/PrizeServer/deleteTermInfo")
 	public ModelAndView deleteTermInfo(String term_id){
 		if(termInfoDAO.deleteOne(term_id)==1)
@@ -357,7 +337,6 @@ public class PrizeDetailController {
 	 * @param type_id
 	 * @return
 	 */
-	//deleteTypeInfo
 	@RequestMapping(type = "post", url = "/PrizeServer/deleteTypeInfo")
 	public ModelAndView deleteTypeInfo(String type_id){
 		if(typeInfoDAO.deleteTypeInfo(type_id)==1)
@@ -372,9 +351,9 @@ public class PrizeDetailController {
 	 */
 	@RequestMapping(type = "get", url = "/PrizeServer/download")
 	public void download(String year,HttpServletResponse response) throws FileNotFoundException, IOException{
-		System.out.println("生成excel文件中...");
+		logger.info("生成excel文件中...");
 		ExcelUtil.createExcel(year);
-		System.out.println("excel文件生成完毕");
+		logger.info("excel文件生成完毕");
 		String filePath =  System.getProperty("user.dir")+File.separator+"test.xls";
 		String fileName = filePath.substring(filePath.lastIndexOf(File.separator));
 		//不能解决中文字体问题
@@ -384,8 +363,8 @@ public class PrizeDetailController {
 		 //这里的fileName是在浏览器下载文件时显示的文件名
 		response.setHeader("Content-Disposition", "attachment;fileName="
                 +fileName );
-		System.out.println("fileName:"+fileName);
-		System.out.println("filePath:"+filePath);
+		logger.info("fileName:"+fileName);
+		logger.info("filePath:"+filePath);
 		//根据给定的文件名创建输入流  然后输入到response的输出流中去   同时要设定response的媒体类型   然后生成响应报文传给浏览器
 		FileCopyUtils.copy(new FileInputStream(new File(filePath)),response.getOutputStream());
 		

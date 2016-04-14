@@ -41,18 +41,13 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	<!-- 注册SpringMVC容器  管理controller等组件-->
-	<!--<servlet>
-		<servlet-name>SpringMVC</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:spring-mvc.xml</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>-->
+
+
 	<servlet>
-		<servlet-name>SpringMVC</servlet-name>
+		<servlet-name>MVC</servlet-name>
 		<servlet-class>mvc.dispatcher.DispatcherServlet</servlet-class>
+
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<!-- 当请求时下面指定的后缀名时交给tomcat默认的servlet来执行 -->
 	 <servlet-mapping>
@@ -94,7 +89,8 @@
 
  	<!-- 所有的请求DispatcherServlet来处理  不能写成/* 这样jsp也会被拦截 -->
  	<servlet-mapping>
-		<servlet-name>SpringMVC</servlet-name>
+		<servlet-name>MVC</servlet-name>
 		<url-pattern>/</url-pattern>
-	</servlet-mapping> 
+	</servlet-mapping>
+
 </web-app>

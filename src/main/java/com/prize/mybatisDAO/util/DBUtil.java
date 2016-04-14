@@ -24,7 +24,6 @@ public class DBUtil {
 				try {
 					reader = Resources.getResourceAsReader("Configuration.xml");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				//通过配置文件构建一个SqlSessionFactory
@@ -33,25 +32,7 @@ public class DBUtil {
 				sqlSession = sessionFactory.openSession();
 	}
 	public static SqlSession getSqlSession() {
-		
 		return sqlSession;
-		
-	}
-	public static void main(String[] args) {
-		System.out.println("1");
-		System.out.println(getSqlSession()==null);
-		SqlSession sqlSession = getSqlSession();
-		//List<PrizeDetail> detail = sqlSession.selectList("PrizeDetail.getPrizeByMap");
-		Map<String, Object> map = new HashMap<String,Object>();
-		PrizeDetail prizeDetail = new PrizeDetail();
-		prizeDetail.handle_result = "未审核";
-		map.put("prizeDetail", prizeDetail);
-		map.put("begin",0);
-		map.put("length", 2);
-		List<PrizeDetail> detail = sqlSession.selectList("com.prize.mybatisDAO.inte.PrizeDetailDAO.getPrizeDetailByMap",map);
-		for (PrizeDetail prizeDetail1 : detail) {
-			System.out.println(prizeDetail1.toString());
-		}
 	}
 	
 }
