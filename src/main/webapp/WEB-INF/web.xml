@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+		<!-- 编码过滤器 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<async-supported>true</async-supported>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	
+
+	
+	<!-- 使用spring的拦截器来进行登录验证 -->
+	<!-- 	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping> -->
+	<!-- 编码过滤器映射 -->
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring-mybatis.xml</param-value>
+	</context-param>
+	<!-- 注册Spring容器   管理dao等组件-->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- 注册SpringMVC容器  管理controller等组件-->
+	<!--<servlet>
+		<servlet-name>SpringMVC</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring-mvc.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>-->
+	<servlet>
+		<servlet-name>SpringMVC</servlet-name>
+		<servlet-class>mvc.dispatcher.DispatcherServlet</servlet-class>
+	</servlet>
+	<!-- 当请求时下面指定的后缀名时交给tomcat默认的servlet来执行 -->
+	 <servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.js</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.json</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.css</url-pattern>
+	</servlet-mapping>
+ 	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.jpg</url-pattern>
+	</servlet-mapping>  
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.png</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.woff</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.ttf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.html</url-pattern>
+	</servlet-mapping>  
+<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.map</url-pattern>
+	</servlet-mapping>  
+
+ 	<!-- 所有的请求DispatcherServlet来处理  不能写成/* 这样jsp也会被拦截 -->
+ 	<servlet-mapping>
+		<servlet-name>SpringMVC</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping> 
+</web-app>

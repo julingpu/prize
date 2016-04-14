@@ -1,0 +1,383 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <title>schoolcheck</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    
+    <link rel="stylesheet" href="../bower_components/foundation/css/foundation.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    
+    <script src="../bower_components/requirejs/require.js"></script>
+    <script src="./scripts/template.js"></script>
+    <script src="../bower_components/modernizr/modernizr.js"></script>
+    <!--<script src="../bower_components/jquery/dist/jquery.min.js"></script>    -->
+    <!--<!--<script src="../bower_components/foundation/js/foundation.js"></script>-->
+    <!--<script src="../bower_components/foundation/js/foundation/foundation.tab.js"></script>-->
+    <!-- endbuild -->
+
+</head>
+<body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">
+        您正在使用 <strong>过时的</strong> 浏览器. 请 
+            <a href="http://browsehappy.com/">升级您的浏览器</a> 
+        以便获得更好的使用体验以及相应的功能. </p>
+    <![endif]-->
+    <div class="main">
+        <header class="header post"></header>
+        <div class="body-content">
+            <ul class="tabs" data-tab>
+                <li class="tab-title default active">
+                    <a href="#panel1">普通竞赛获奖情况申请</a>
+                </li>
+                <li class="tab-title default">
+                    <a href="#panel2">发明专利获奖申请</a>
+                </li>
+                <li class="tab-title default">
+                    <a href="#panel3">公开发表的论文或文学作品</a>
+                </li>
+            </ul>
+            <div class="tabs-content">
+                <div class="content active" id="panel1">
+                    <form action="/PrizeServer/addPrizeDetail" method="post" enctype="multipart/form-data">
+                        <div class="form-control">
+                            <label for="type"><span class="icon">&#xe6bb;</span></label>
+                            <select name="prize_type" id="type" required>
+                                <option value="">
+                                    ===============请选择提交申请项目的类别===============
+                                </option>
+                            </select>                  
+                        </div>
+                        <div class="form-control">
+                            <label for="academy-panel1"><span class="icon">&#xe621;</span></label>
+                            <select name="academy" id="academy-panel1" required="required">
+                                <option value="">
+                                    ===============请选择学院===============
+                                </option>
+                                <option value="纺织科学与工程学院">纺织科学与工程学院</option>
+                                <option value="机械工程与自动化学院">机械工程与自动化学院</option>
+                                <option value="化学与化工学院">化学与化工学院</option>
+                                <option value="环境工程学院">环境工程学院</option>
+                                <option value="电子与电气工程学院">电子与电气工程学院</option>
+                                <option value="数学与计算机学院">数学与计算机学院</option>
+                                <option value="材料科学与工程学院">材料科学与工程学院</option>
+                                <option value="艺术与设计学院">艺术与设计学院</option>
+                                <option value="服装学院">服装学院</option>
+                                <option value="传媒学院">传媒学院</option>
+                                <option value="管理学院">管理学院</option>
+                                <option value="会计学院">会计学院</option>
+                                <option value="经济学院">经济学院</option>
+                                <option value="外国语学院">外国语学院</option>
+                                <option value="马克思主义学院">马克思主义学院</option>
+                                <option value="现代纺织学院">现代纺织学院</option>
+                                <option value="体育课部">体育课部</option>
+                                <option value="国际教育学院">国际教育学院</option>
+                                <option value="高等职业技术学院">高等职业技术学院</option>
+                                <option value="继续教育学院">继续教育学院</option>
+                                <option value="外经贸学院">外经贸学院</option>
+                            </select>
+                        </div>
+                        <div class="form-contrl">
+                            <label for="className"><span class="icon">&#xe6de;</span></label>
+                            <input name="clazz" id="className" required="required"
+                                placeholder="请输入班级名称，如：软件11202" >
+                        </div>
+                        <div class="form-contrl">
+                            <label for="projectName"><span class="icon">&#xe62b;</span></label>
+                            <input id="projectName" name="works_name" placeholder="请输入作品名称" required="required">
+                        </div>
+                        <div class="form-contrl">
+                            <label for="awardsName"><span class="icon">&#xe69e;</span></label>
+                            <input id="awardsName" name="prize_name"  required="required"                            
+                                placeholder="请输入奖项名称及等级，如：2014中国包装创意设计大赛 一等奖">
+                        </div>
+                        <div class="form-contrl">
+                            <label for="organizer"><span class="icon">&#xe676;</span></label>
+                            <input id="organizer" name="host_name" required="required" 
+                                placeholder="请输入盖章单位或主办单位名称">
+                        </div>
+                        <div class="form-contrl">
+                            <label for="prizeWinner"><span class="icon">&#xe673;</span></label>
+                            <input id="prizeWinner" name="student_name" required="required"
+                                placeholder="请输入证书上作者姓名：如张三、李四等">
+                        </div>
+                        <div class="form-contrl">
+                            <label for="creditcard"><span class="icon">&#xe63f;</span></label>
+                            <input id="creditcard" name="student_bank_card" required="required"
+                                placeholder="请输入项目经费的转入账号">
+                        </div>
+                        <div class="form-contrl">
+                            <label for="">
+                                <span class="icon">&#xe623;</span>
+                                <span class="tip">上传至少一张至多五张证明材料图片，
+                                    合适的图片将提高审核成功的几率</span>
+                            </label>
+                            <div class="fileContent">
+                                <input type="file" name="file" class="hidden null">
+                                <input type="file" name="file" class="hidden null">
+                                <input type="file" name="file" class="hidden null">
+                                <input type="file" name="file" class="hidden null">
+                                <input type="file" name="file" class="hidden null">
+                            </div>
+                            <div class="fileWrapper">
+                            </div>
+                            <button class="icon addFile tiny round">&#xe70a;</button>
+                        </div>
+                        <div class="form-contrl center">
+                            <button type="submit" class="button round">提交申请</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="content" id="panel2">
+                    <form action="/PrizeServer/addPrizeDetail" method="post" enctype="multipart/form-data">
+                        <div class="form-control">
+                            <label for="academy-panel2"><span class="icon">&#xe621;</span></label>
+                            
+                            <input type="hidden" name = "prize_type" value="发明专利获奖申请">
+                            <select name="academy" id="academy-panel2" required="required">
+                                <option value="">                                    
+                                    ===============请选择学院===============
+                                </option>
+                                <option value="纺织科学与工程学院">纺织科学与工程学院</option>
+                                <option value="机械工程与自动化学院">机械工程与自动化学院</option>
+                                <option value="化学与化工学院">化学与化工学院</option>
+                                <option value="环境工程学院">环境工程学院</option>
+                                <option value="电子与电气工程学院">电子与电气工程学院</option>
+                                <option value="数学与计算机学院">数学与计算机学院</option>
+                                <option value="材料科学与工程学院">材料科学与工程学院</option>
+                                <option value="艺术与设计学院">艺术与设计学院</option>
+                                <option value="服装学院">服装学院</option>
+                                <option value="传媒学院">传媒学院</option>
+                                <option value="管理学院">管理学院</option>
+                                <option value="会计学院">会计学院</option>
+                                <option value="经济学院">经济学院</option>
+                                <option value="外国语学院">外国语学院</option>
+                                <option value="马克思主义学院">马克思主义学院</option>
+                                <option value="现代纺织学院">现代纺织学院</option>
+                                <option value="体育课部">体育课部</option>
+                                <option value="国际教育学院">国际教育学院</option>
+                                <option value="高等职业技术学院">高等职业技术学院</option>
+                                <option value="继续教育学院">继续教育学院</option>
+                                <option value="外经贸学院">外经贸学院</option>
+                            </select>                  
+                        </div>
+                        <div class="form-contrl">
+                            <label for="className"><span class="icon">&#xe6de;</span></label>
+                            <input name="clazz" id="className" required="required"
+                                placeholder="请输入班级名称，如：软件11202" >
+                        </div>
+                        <div class="form-contrl">
+                            <label for="patentName"><span class="icon">&#xe655;</span></label>
+                            <input id="patentName" placeholder="请输入专利名称" 
+                                name="works_name" required="required">
+                        </div>
+                        <div class="form-contrl">
+                            <label for="patentNumber"><span class="icon">&#xe637;</span></label>
+                            <input id="patentNumber" name="prize_name" required="required"
+                                placeholder="请输入专利号">
+                        </div>
+                        <div class="form-contrl">
+                            <label for="time"><span class="icon">&#xe653;</span></label>
+                            <input id="time" name="host_name" required="required"
+                                placeholder="请输入申请年月，如：2014.12">
+                        </div>
+                        <div class="form-contrl">
+                            <label for="patentOwne"><span class="icon">&#xe673;</span></label>
+                            <input id="patentOwne" name="student_name" required="required"
+                                placeholder="请输入专利权人姓名：如张三、李四">
+                        </div>
+                        <div class="form-contrl">
+                            <label for="">
+                                <span class="icon">&#xe623;</span>
+                                <span class="tip">上传至少一张至多五张证明材料图片，
+                                    合适的图片将提高审核成功的几率</span>
+                            </label>
+                            <div class="fileContent">
+                                <input type="file" name="file" class="hidden null">
+                                <input type="file" name="file" class="hidden null">
+                                <input type="file" name="file" class="hidden null">
+                                <input type="file" name="file" class="hidden null">
+                                <input type="file" name="file" class="hidden null">
+                            </div>
+                            <div class="fileWrapper">
+                            </div>
+                            <button class="icon addFile tiny round">&#xe70a;</button>
+                        </div>
+                        <div class="form-contrl center">
+                            <button type="submit" class="button round">提交申请</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="content" id="panel3">
+                    <form action="/PrizeServer/addPrizeDetail" method="post" enctype="multipart/form-data">
+                        <div class="form-control">
+                        	<input type="hidden" name = "prize_type" value="公开发表的论文或文学作品">
+                            <label for="academy-panel3"><span class="icon">&#xe621;</span></label>
+                            <select name="academy" id="academy-panel3" required="required">
+                                <option value="">
+                                    ===============请选择学院===============
+                                </option>
+                                <option value="纺织科学与工程学院">纺织科学与工程学院</option>
+                                <option value="机械工程与自动化学院">机械工程与自动化学院</option>
+                                <option value="化学与化工学院">化学与化工学院</option>
+                                <option value="环境工程学院">环境工程学院</option>
+                                <option value="电子与电气工程学院">电子与电气工程学院</option>
+                                <option value="数学与计算机学院">数学与计算机学院</option>
+                                <option value="材料科学与工程学院">材料科学与工程学院</option>
+                                <option value="艺术与设计学院">艺术与设计学院</option>
+                                <option value="服装学院">服装学院</option>
+                                <option value="传媒学院">传媒学院</option>
+                                <option value="管理学院">管理学院</option>
+                                <option value="会计学院">会计学院</option>
+                                <option value="经济学院">经济学院</option>
+                                <option value="外国语学院">外国语学院</option>
+                                <option value="马克思主义学院">马克思主义学院</option>
+                                <option value="现代纺织学院">现代纺织学院</option>
+                                <option value="体育课部">体育课部</option>
+                                <option value="国际教育学院">国际教育学院</option>
+                                <option value="高等职业技术学院">高等职业技术学院</option>
+                                <option value="继续教育学院">继续教育学院</option>
+                                <option value="外经贸学院">外经贸学院</option>
+                            </select>                  
+                        </div>
+                        <div class="form-contrl">
+                            <label for="className"><span class="icon">&#xe6de;</span></label>
+                            <input name="clazz" id="className" required="required"
+                                placeholder="请输入班级名称，如：软件11202" >
+                        </div>
+                        <div class="form-contrl">
+                            <label for="articleName"><span class="icon">&#xe6cd;</span></label>
+                            <input id="articleName" placeholder="请输入论文题目" 
+                                name="works_name" required="required">
+                        </div>
+                        <div class="form-contrl">
+                            <label for="publicationName"><span class="icon">&#xe620;</span></label>
+                            <input id="publicationName" name="prize_name" required="required"
+                                placeholder="请输入刊物名称">
+                        </div>
+                        <div class="form-contrl">
+                            <label for="time"><span class="icon">&#xe653;</span></label>
+                            <input id="time" name="host_name" required="required"
+                                placeholder="请输入发表年月，如：2014.12">
+                        </div>
+                        <div class="form-contrl">
+                            <label for="patentOwne"><span class="icon">&#xe673;</span></label>
+                            <input id="patentOwne" name="student_name" required="required"
+                                placeholder="请输入专利权人姓名：如张三、李四">
+                        </div>
+                        <div class="form-contrl">
+                            <label for="">
+                                <span class="icon">&#xe623;</span>
+                                <span class="tip">上传至少一张至多五张证明材料图片，
+                                    合适的图片将提高审核成功的几率</span>
+                            </label>
+                            <div class="fileContent">
+                                <input type="file" name="file" class="hidden null">
+                                <input type="file" name="file" class="hidden null">
+                                <input type="file" name="file" class="hidden null">
+                                <input type="file" name="file" class="hidden null">
+                                <input type="file" name="file" class="hidden null">
+                            </div>
+                            <div class="fileWrapper">
+                            </div>
+                            <button class="icon addFile tiny round">&#xe70a;</button>
+                        </div>
+                        <div class="form-contrl center">
+                            <button type="submit" class="button round">提交申请</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> 
+                <div class="footer">
+            <footer>
+                <small>
+                  <span class="copyright">武汉纺织大学&copy;版权所有</span>
+                  <span class="copyright">2015 All rights reserved!</span>
+                  <span class="copyright">阳光校区：武汉市江夏区阳光大道1号 邮政编码：430200</span>
+                  <span class="copyright">南湖校区：武汉市洪山区纺织路1号 邮政编码：430073</span>
+                  <span class="copyright">东湖校区：武汉市武昌区东湖梨园渔光村1号 邮政编码：430077</span>
+                </small>
+            </footer>
+        </div> 
+    </div>  
+    
+    <script id="types" type="text/html">
+        <option value="">
+            ===============请选择提交申请项目的类别===============
+        </option>
+        <% for ( var i = 0; i < typeInfoList.length; i++ ) { %>
+            <option value="<%= typeInfoList[i].type_name %>"><%= typeInfoList[i].type_name %></option>
+        <% } %>
+    </script>
+
+    <div id="notification"></div> 
+    <script>
+        require( ['./scripts/init'], function( exp ) {
+            var config = exp.config;
+            config( ['jquery', 'user/main', 'foundation', 'foundation_tab'], function(  $, main, foundation, foundation_tab ) {
+                // 首先判断提交结果
+                if ( location.search.substring( 8, location.search.length ) === 'failed' ) {
+                    $('#notification').animate({
+                        'right': '0'
+                    }, 800)
+                    .text('提交失败！');
+                    setTimeout(function() {
+                        $('#notification').animate({
+                            'right': '-240px'
+                        }, 1000);
+                    }, 3000);
+                }
+                
+                $.ajax({
+                    url: '/PrizeServer/getAllTermInfoAndPrizeInfo',  // ./test/settings.json
+                    dataType: 'json',
+                    success: function( data ) {
+                        var settings = data;
+                        $('#type').html(
+                            baidu.template( 'types', settings )
+                        );
+                    }
+                });
+                main.addFile();
+                main.deleteImg();
+                $(document).foundation();
+                
+                $('form').on('submit', function ( event ) {
+                    var count = 0;
+                    $('[id^="panel"].active').find('input').not('[type="file"]' ).each( function () {
+                        if ( $(this).val() === '' ||
+                            $(this).val() == null ) {
+                            alert('有非空字段未填写！');
+                            event.preventDefault();
+                        }
+                    });
+                    $('[id^="panel"].active').find('select').each( function () {
+                        if ( $(this).val() === '' ||
+                            $(this).val() == null ) {
+                            alert('有非空字段未填写！');
+                            event.preventDefault();
+                        }
+                    });               
+                    $('[id^="panel"].active').find('input[type="file"]').each( function () {
+                        if ( $(this).hasClass('null') ) {
+                            count ++ ;
+                        }
+                    });
+                    if ( count > 4 ) {
+                        alert('请至少上传一张图片！');
+                        event.preventDefault();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

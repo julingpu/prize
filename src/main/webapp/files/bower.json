@@ -1,0 +1,16 @@
+{
+  "name": "schoolcheck",
+  "private": true,
+  "dependencies": {
+    "jquery": "1.11.3",
+    "modernizr": "~2.8.3",
+    "foundation": "~5.5.3",
+    "jade": "~1.11.0",
+    "requirejs": "~2.1.22",
+    "ejs": "~1.0.0"
+  },
+  "devDependencies": {
+    "chai": "~3.4.0",
+    "mocha": "~2.3.3"
+  }
+}

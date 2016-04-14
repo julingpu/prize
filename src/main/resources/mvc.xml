@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mvc>
+	<!-- 设置controller层的包名 -->
+	<param name="controllerPackage" value="com.prize.controller"/>
+
+	<param name="entityPackage" value="com.prize.entity"/>
+</mvc>

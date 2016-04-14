@@ -1,0 +1,256 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <title>schoolcheck</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="../bower_components/foundation/css/foundation.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <!-- build:js scripts/vendor/modernizr.js -->
+    
+    <script src="../bower_components/requirejs/require.js"></script>
+    <script src="./scripts/template.js"></script>
+    <script src="../bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+</head>
+<body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">
+        您正在使用 <strong>过时的</strong> 浏览器. 请 
+            <a href="http://browsehappy.com/">升级您的浏览器</a> 
+        以便获得更好的使用体验以及相应的功能. </p>
+    <![endif]-->
+    <nav>
+        <ul>
+            <li class="button icon waiting" title="未审核项目"
+                onclick="window.location.href = './uncheck.html'">&#xe707;</li>
+            <li class="button icon list" title="项目列表"
+                onclick="window.location.href = './checkInfo.html'">&#xe6ba;</li>
+            <li class="button icon setting active" title="系统设置"
+                onclick="window.location.href = './settings.html'">&#xe695;</li>
+            <li class="button icon download" title="下载office world文档"
+                href="#" data-reveal-id="year-check">&#xe6c7;</li>
+        </ul>
+    </nav>
+    <div class="main">
+        <header class="header settings"></header>
+        <div class="body-content">
+			<div class="set">
+				<p>设置学期</p>
+				<div class="semesters term">
+				</div>
+				<div class="setForm">
+					<form action="/PrizeServer/addTermInfo" method="post">
+						<div class="row">
+                            <div class="large-12 columns">
+                                <label for="name" class="large-4">学期名称</label>
+							    <input required="required" type="text" name="term_name" class="large-6" 
+                                    placeholder="请输入学期名称，如: 2015年春季">    
+                            </div>                            
+						</div>
+                        <div class="row">
+                            <div class="small-6 columns">
+                                <div class="small-4 columns">
+                                    <label for="" class="left inline">学期开始时间</label>
+                                </div>
+                                <div class="small-8 columns">
+                                    <input required="required" type="date" name="term_begin_time">
+                                </div>
+                            </div>
+                            <div class="small-6 columns">
+                                <div class="small-4 columns">
+                                    <label for="" class="left inline">学期结束时间</label>
+                                </div>
+                                <div class="small-8 columns">
+                                    <input required="required" type="date" name="term_end_time">        
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="small-7 columns right">                                
+                                <input type="submit" class="button small round small-4" value="添加">
+                            </div>
+                        </div>
+					</form>
+				</div>
+				
+			</div>
+			<div class="set">
+				<p>设置申请类别</p>
+                <div class="semesters type">				    
+				</div>
+				<div class="setForm">
+					<form action="/PrizeServer/addTypeInfo" method="post">
+						<div class="row">
+                            <div class="large-12 columns">
+                                <label for="name" class="large-4">学期名称</label>
+							    <input type="text" name="type_name" class="large-6" 
+                                    placeholder="请输入项目或竞赛名称，如: XXXX省级XX比赛">    
+                            </div>                            
+						</div>
+                        <div class="row">
+                            <div class="small-7 columns right">                                
+                                <input type="submit" class="button small round small-4" value="添加">
+                            </div>
+                        </div>
+					</form>
+				</div>
+			</div>
+        </div> 
+        <div class="footer">
+            <footer>
+                <small>
+                  <span class="copyright">武汉纺织大学&copy;版权所有</span>
+                  <span class="copyright">2015 All rights reserved!</span>
+                  <span class="copyright">阳光校区：武汉市江夏区阳光大道1号 邮政编码：430200</span>
+                  <span class="copyright">南湖校区：武汉市洪山区纺织路1号 邮政编码：430073</span>
+                  <span class="copyright">东湖校区：武汉市武昌区东湖梨园渔光村1号 邮政编码：430077</span>
+                </small>
+            </footer>
+        </div> 
+    </div>
+    
+    
+    <div id="notification"></div>     
+    
+    <!-- javascript template -->
+    <script id="type" type="text/html">
+        <% for ( var i = 0; i < typeInfoList.length; i++ ) { %>
+            <span class="item" data-type="type" title="<%= typeInfoList[i].type_name %>"
+                data-id="<%= typeInfoList[i].type_id%>">
+                <span><%= typeInfoList[i].type_name %></span>
+                <span class="icon delete show inline"></span>
+            </span>
+        <% } %>
+    </script>
+    
+    <script id="term" type="text/html">
+        <% for ( var i = 0; i < termInfoList.length; i++ ) { %>
+            <span class="item" data-type="term" title="<%= termInfoList[i].term_begin_time %> - <%= termInfoList[i].term_end_time %>"
+                data-id="<%= termInfoList[i].term_id%>">
+                <span><%= termInfoList[i].term_name %></span>
+                <span class="icon delete show inline"></span>	
+            </span>
+            
+        <% } %>
+    </script>
+    
+    <!-- template -->    
+    <div id="year-check" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
+        <h4 class="title icon">确认信息</h4>
+        <div class="money center">
+            <p>请输入要打印的项目列表的年份</p>
+            <form action="/PrizeServer/download" method="get" data-abide>
+                <p>
+                    <div class="input-wrapper">
+                        <input type="text" class="inline-input" name="year" required="required">
+                    </div>
+                </p>    
+                <button type="submit" class="button round">提交</button>
+            </form>
+            
+        </div>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+        
+    <script>
+        require( ['./scripts/init'], function( exp ) {
+           var config =  exp.config;
+           config( ['jquery', 'foundation', 'foundation_tab'], function( $ ) {
+               $(document).foundation();
+               $('#year-check').trigger('click');                
+               // 判断操作结果
+               if ( location.search.substring( 8, location.search.length ) === 'success' ) {
+                    $('#notification').animate({
+                        'right': '0'
+                    }, 800)
+                    .text('操作成功！');
+                    setTimeout(function() {
+                        $('#notification').animate({
+                            'right': '-240px'
+                        }, 1000);                        
+                    }, 3000);
+                } else if ( location.search.substring( 8, location.search.length ) === 'failed' ) {
+                    $('#notification').animate({
+                        'right': '0'
+                    }, 800)
+                    .text('操作失败！');
+                    setTimeout(function() {
+                        $('#notification').animate({
+                            'right': '-240px'
+                        }, 1000);                        
+                    }, 3000);
+                }
+                
+               $.ajax({
+                   url: '/PrizeServer/getAllTermInfoAndPrizeInfo', //./test/settings.txt'
+                   dataType: 'json',
+                   success: function ( data ) {
+                       var settings =  data ;
+                       $('div.semesters.type').html(
+                           baidu.template( 'type', settings ) 
+                       );
+                       $('div.semesters.term').html(
+                           baidu.template( 'term', settings ) 
+                       );
+                       // 渲染完成之后，给所有的item加上hover效果
+                       $('div.semesters').find('span.delete').on('click', function ( event ) {
+                           if ( !confirm('确认删除？') ) {
+                               return;
+                           }
+                           var $parent = $(event.target).parent(),
+                               id = $parent.attr('data-id');
+                           if ( $parent.attr('data-type') === 'term' ) {
+                               $.ajax({
+                                   url: '/PrizeServer/deleteTermInfo',
+                                   method: 'post',
+                                   ansy: 'false',
+                                   data: {
+                                       term_id: id
+                                   },
+                                   success:function(date){
+                                   		location.reload(true);
+                                   },
+                                   error: function ( data ) {
+                                       alert('网络链接失败！');
+                                   }
+                               });
+                           } else if ( $parent.attr('data-type') === 'type' ) {
+                                $.ajax({
+                                   url: '/PrizeServer/deleteTypeInfo',
+                                   method: 'post',
+                                   async: 'false',
+                                   data: {
+                                       type_id: id
+                                   },
+                                   success:function(date){
+                                   		location.reload(true);
+                                   },
+                                   error: function ( data ) {
+                                       alert('网络链接失败！');
+                                   }
+                               });
+                           }
+                       });
+                   },
+                   error: function () {
+                       alert('网络出现了问题，请刷新页面！');
+                   } 
+               });
+           });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <title>schoolcheck</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="../bower_components/foundation/css/foundation.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <!-- build:js scripts/vendor/modernizr.js -->
+    
+    <script src="../bower_components/requirejs/require.js"></script>
+    <script src="./scripts/template.js"></script>
+    <!-- endbuild -->
+
+</head>
+<body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">
+        您正在使用 <strong>过时的</strong> 浏览器. 请 
+            <a href="http://browsehappy.com/">升级您的浏览器</a> 
+        以便获得更好的使用体验以及相应的功能. </p>
+    <![endif]-->
+
+    <div class="main">
+        <header class="header result"></header>
+        <div class="body-content">            
+            <div id="applyContent">                
+            </div>
+            <div id="pagenationContent" class="pagenation">                
+            </div>
+        </div> 
+        <div class="footer">
+            <footer>
+                <small>
+                  <span class="copyright">武汉纺织大学&copy;版权所有</span>
+                  <span class="copyright">2015 All rights reserved!</span>
+                  <span class="copyright">阳光校区：武汉市江夏区阳光大道1号 邮政编码：430200</span>
+                  <span class="copyright">南湖校区：武汉市洪山区纺织路1号 邮政编码：430073</span>
+                  <span class="copyright">东湖校区：武汉市武昌区东湖梨园渔光村1号 邮政编码：430077</span>
+                </small>
+            </footer>
+        </div> 
+    </div>
+    
+    <div id="notification"></div>
+    
+    <!-- JavaScript Template -->
+    <script id="apply" type="text/html">
+        <% for ( var i = 0; i < prizeList.length; i++ ) { %>
+            <div class="apply <%= prizeList[i].handle_result %>">
+                <p class="title icon"><%=prizeList[i].prize_type + prizeList[i].prize_name%></p>
+                <div class="description">
+                    <% for ( var j = 0; j < prizeList[i].file_path.length; j++ ) { %>
+                        <img src="../../images/<%=prizeList[i].file_path[j] %>" class="normal" 
+                            title="<%=prizeList[i].prize_name %>">    
+                    <% } %>                                        
+                    <div class="info">
+                        <p class="academy"><span class="icon">&#xe621; </span><%=prizeList[i].academy %></p>
+                        <p class="className"><span class="icon">&#xe6de; </span><%=prizeList[i].clazz %></p>
+                        <p class="time"><span class="icon">&#xe64e; </span> <%=prizeList[i].submit_time %></p>
+                    </div>
+                </div>
+            </div>        
+        <% } %>   
+    </script>
+    
+    <script id="pageNation" type="text/html">
+        <ul>
+            <li class="button round small prev">&lt;&lt;</li>
+            <% if ( totalPage <= 1 ) { %>
+                <li class="button round small active">1</li>                
+            <% } else if ( totalPage > 1 && totalPage <= 5 ) {
+                 for ( var i = 0; i < totalPage; i++ ) { 
+                     if ( i + 1 == currentPage ) { %>
+                        <li class="button round small active"><%= i+1 %></li>
+                    <% } else { %>
+                        <li class="button round small"><%= i+1 %></li>
+                    <% } 
+                 }     
+             } else if ( totalPage > 5 ) { 
+                if ( currentPage >= 3 && currentPage <= totalPage - 2 ) { %>
+                    <li class="button round small"><%= currentPage - 2 %></li>
+                    <li class="button round small"><%= currentPage - 1 %></li>
+                    <li class="button round small active"><%= currentPage %></li>
+                    <li class="button round small"><%= currentPage + 1 %></li>
+                    <li class="button round small"><%= currentPage + 2 %></li>
+               <% } else if ( currentPage == 1 || currentPage == 2 ) { 
+                   if ( currentPage == 1 ) { %>
+                       <li class="button round small active">1</li>                       
+                       <li class="button round small">2</li>
+                   <% } else { %>
+                       <li class="button round small">1</li>                       
+                       <li class="button round small active">2</li>
+                   <% } %>
+                   <li class="button round small">3</li>
+                   <li class="button round small">4</li>
+                   <li class="button round small">5</li>                   
+               <% } else if ( 
+                   currentPage == totalPage - 1 || 
+                   currentPage == totalPage ) { %>
+                   <li class="button round small"><%= totalPage - 4 %></li>
+                   <li class="button round small"><%= totalPage - 3 %></li>
+                   <li class="button round small"><%= totalPage - 2 %></li> 
+                   <% if ( currentPage == totalPage - 1 ) { %>
+                       <li class="button round small active"><%= totalPage - 1 %></li>                       
+                       <li class="button round small"><%= totalPage %></li>
+                   <% } else { %>
+                       <li class="button round small"><%= totalPage - 1 %></li>                       
+                       <li class="button round small active"><%= totalPage %></li>
+                   <% }              
+                 }
+             } %>
+            <li class="button round small next">&gt;&gt;</li>
+        </ul>        
+    </script>
+        
+    <script>
+        require( ['./scripts/init'], function( exp ) {
+            var config = exp.config;                        
+                        
+            // 渲染页面中的所有申请
+            config( ['jquery', 'user/main'], function( $, main ) {
+                 // 首先判断提交结果
+                if ( location.search.substring( 8, location.search.length ) === 'failed' ) {
+                    $('#notification').animate({
+                        'right': '0'
+                    }, 800)
+                    .text('提交成功，提交项正在审核中！');
+                    setTimeout(function() {
+                        $('#notification').animate({
+                            'right': '-240px'
+                        }, 1000);                        
+                    }, 3000);
+                }
+                
+                $.ajax({
+                    url: '/PrizeServer/getPrizeByTerm', //'./test/applies.json'
+                    method: 'get',
+                    dataType: 'json',
+                    data: {
+                        currentPage: 1,
+                        prize_type: '',
+                        term_name: ''
+                    },
+                    success: function( data ) {
+                        var info = data;
+                        var bt = baidu.template;
+                        var html = baidu.template( 'apply', info ),
+                            pagenationHtml = baidu.template( 'pageNation', info );
+                        $('#applyContent').html( html );
+                        
+                        // 渲染分页
+                        $('#pagenationContent').html( pagenationHtml );
+                        
+                        // 渲染完成之后添加事件
+                        main.attachPagenation( info.totalPage );
+                    } 
+                });                                       
+            });            
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <title>schoolcheck</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="../bower_components/foundation/css/foundation.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <!-- build:js scripts/vendor/modernizr.js -->
+    
+    <script src="../bower_components/requirejs/require.js"></script>
+    <script src="./scripts/template.js"></script>
+    <script src="../bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+
+</head>
+<body>
+    <!--[if lt IE 10]>za
+      <p class="browsehappy">
+        您正在使用 <strong>过时的</strong> 浏览器. 请 
+            <a href="http://browsehappy.com/">升级您的浏览器</a> 
+        以便获得更好的使用体验以及相应的功能. </p>
+    <![endif]-->
+    <nav>
+        <ul>
+            <li class="button icon waiting active" title="未审核项目"
+                onclick="window.location.href = './uncheck.html'">&#xe707;</li>
+            <li class="button icon list" title="项目列表"
+                onclick="window.location.href = './checkInfo.html'">&#xe6ba;</li>
+            <li class="button icon setting" title="系统设置"
+                onclick="window.location.href = './settings.html'">&#xe695;</li>
+            <li class="button icon download" title="下载office world文档"
+                 href="#" data-reveal-id="year-check">&#xe6c7;</li>
+        </ul>
+    </nav>
+    <div class="main">
+        <header class="header check"></header>
+        <div class="body-content">
+            <div class="rules">
+                <form id="search" class="center">                  
+                    <input type="hidden" name="currentPage" value="1">  
+                    <select name="term_name" id="term" class="form-rule" required="required">
+                    </select>
+                    <label for="type" class="icon inline">&#xe6ba;</label>
+                    <select name="prize_type" id="type" class="form-rule" required="required">
+                    </select>
+                    <button class="round small">搜索</button>
+                </form>                                                
+            </div>
+            <div id="applyContent"></div>           
+            <div id="pagenationContent" class="pagenation">                
+            </div>
+        </div> 
+        <div class="footer">
+            <footer>
+                <small>
+                  <span class="copyright">武汉纺织大学&copy;版权所有</span>
+                  <span class="copyright">2015 All rights reserved!</span>
+                  <span class="copyright">阳光校区：武汉市江夏区阳光大道1号 邮政编码：430200</span>
+                  <span class="copyright">南湖校区：武汉市洪山区纺织路1号 邮政编码：430073</span>
+                  <span class="copyright">东湖校区：武汉市武昌区东湖梨园渔光村1号 邮政编码：430077</span>
+                </small>
+            </footer>
+        </div> 
+    </div>
+    
+    
+    <div id="notification"></div>
+    
+    <!-- JavaScript Template -->
+    <script id="apply" type="text/html">
+        <% for ( var i = 0; i < prizeList.length; i++ ) { %>
+            <div class="apply <%= prizeList[i].handle_result %>" data-id="<%= prizeList[i].prize_id %>">
+                <p class="title icon"><%=prizeList[i].prize_name %></p>
+                <div class="description">
+                    <% for ( var j = 0; j < prizeList[i].file_path.length; j++ ) { %>
+                        <img src="../../images/<%=prizeList[i].file_path[j] %>" class="normal" 
+                            title="<%=prizeList[i].prize_name %>">    
+                    <% } %>                                        
+                    <div class="info">
+                        <p class="academy">
+                            <span class="icon">&#xe621; </span>
+                            <%=prizeList[i].academy %>
+                        </p>
+                        <p class="className">
+                            <span class="icon">&#xe6de; </span>
+                            <%=prizeList[i].clazz %>
+                        </p>
+                        <p class="time">
+                            <span class="icon">&#xe64e; </span> 
+                            <%=prizeList[i].submit_time %>
+                        </p>
+                    </div>
+                    <a class="button round more" 
+                        href="details.html?id=<%=prizeList[i].prize_id%>" target="_blank">查看详情</a>
+                </div>
+            </div>        
+        <% } %>   
+    </script>
+    
+    <script id="pageNation" type="text/html">
+        <ul>
+            <li class="button round small prev">&lt;&lt;</li>
+            <% if ( totalPage <= 1 ) { %>
+                <li class="button round small active">1</li>                
+            <% } else if ( totalPage > 1 && totalPage <= 5 ) {
+                 for ( var i = 0; i < totalPage; i++ ) { 
+                     if ( i + 1 == currentPage ) { %>
+                        <li class="button round small active"><%= i+1 %></li>
+                    <% } else { %>
+                        <li class="button round small"><%= i+1 %></li>
+                    <% } 
+                 }     
+             } else if ( totalPage > 5 ) { 
+                if ( currentPage >= 3 && currentPage <= totalPage - 2 ) { %>
+                    <li class="button round small"><%= currentPage - 2 %></li>
+                    <li class="button round small"><%= currentPage - 1 %></li>
+                    <li class="button round small active"><%= currentPage %></li>
+                    <li class="button round small"><%= currentPage + 1 %></li>
+                    <li class="button round small"><%= currentPage + 2 %></li>
+               <% } else if ( currentPage == 1 || currentPage == 2 ) { 
+                   if ( currentPage == 1 ) { %>
+                       <li class="button round small active">1</li>                       
+                       <li class="button round small">2</li>
+                   <% } else { %>
+                       <li class="button round small">1</li>                       
+                       <li class="button round small active">2</li>
+                   <% } %>
+                   <li class="button round small">3</li>
+                   <li class="button round small">4</li>
+                   <li class="button round small">5</li>                   
+               <% } else if ( 
+                   currentPage == totalPage - 1 || 
+                   currentPage == totalPage ) { %>
+                   <li class="button round small"><%= totalPage - 4 %></li>
+                   <li class="button round small"><%= totalPage - 3 %></li>
+                   <li class="button round small"><%= totalPage - 2 %></li> 
+                   <% if ( currentPage == totalPage - 1 ) { %>
+                       <li class="button round small active"><%= totalPage - 1 %></li>                       
+                       <li class="button round small"><%= totalPage %></li>
+                   <% } else { %>
+                       <li class="button round small"><%= totalPage - 1 %></li>                       
+                       <li class="button round small active"><%= totalPage %></li>
+                   <% }              
+                 }
+             } %>
+            <li class="button round small next">&gt;&gt;</li>
+        </ul>        
+    </script>
+        
+    <script id="terms" type="text/html">
+        <option value="">
+            ===================请选择学期===================
+        </option>
+        <% for ( var i = 0; i < termInfoList.length; i++ ) { %>
+            <option value="<%= termInfoList[i].term_begin_time + termInfoList[i].term_end_time %>"><%= termInfoList[i].term_name %></option>
+        <% } %>
+    </script>
+    
+    <script id="types" type="text/html">
+        <option value="">
+            ===================请选择奖项类别===================
+        </option>
+        <% for ( var i = 0; i < typeInfoList.length; i++ ) { %>
+            <option value="<%= typeInfoList[i].type_name %>"><%= typeInfoList[i].type_name %></option>
+        <% } %>
+	<option value="发明专利获奖申请">
+            发明专利获奖申请
+        </option>
+	<option value="公开发表的论文或文学作品">
+           公开发表的论文或文学作品
+        </option>
+    </script>
+    
+    <!-- template -->    
+    <div id="year-check" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
+        <h4 class="title icon">确认信息</h4>
+        <div class="money center">
+            <p>请输入要打印的项目列表的年份</p>
+            <form action="/PrizeServer/download" method="get" data-abide>
+                <p>
+                    <span class="icon money">&#xe63e;</span>
+                    <div class="input-wrapper">
+                        <input type="text" class="inline-input" name="year" required="required">
+                    </div>
+                </p>    
+                <button type="submit" class="button round">提交</button>
+            </form>
+            
+        </div>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+    
+    <script>
+        require( ['./scripts/init'], function( exp ) {
+            var config = exp.config;                        
+                        
+            config( ['jquery', 'user/main', 'foundation', 'foundation_tab'], function( $, main ) {
+                $(document).foundation();
+                $('#year-check').trigger('click'); 
+                // 判断操作结果
+               if ( location.search.substring( 8, location.search.length ) === 'success' ) {
+                    $('#notification').animate({
+                        'right': '0'
+                    }, 800)
+                    .text('操作成功！');
+                    setTimeout(function() {
+                        $('#notification').animate({
+                            'right': '-240px'
+                        }, 1000);                        
+                    }, 3000);
+                }
+                
+                // 渲染系统设置中的相关信息
+                $.ajax({
+                   url: '/PrizeServer/getAllTermInfoAndPrizeInfo',
+                   method: 'get',
+                   dataType: 'json',
+                   success: function( data ) {
+                       var settings = data;
+                       $('#term').html(
+                           baidu.template( 'terms', settings )
+                       );
+                       $('#type').html(
+                           baidu.template( 'types', settings )
+                       );
+                   } 
+                });
+                
+                // 绑定搜索的监听事件
+                $('#search').on('submit', function ( event ) {
+                    event.preventDefault();
+                    $.ajax({
+                        url: '/PrizeServer/getUnCheckedPrize',
+                        method: 'post',
+                        data: {
+                            currentPage: 1,
+                            term_name: $('#term').find('option:checked').text().trim(),
+                            prize_type: $('#type').find('option:checked').text().trim()
+                        },
+                        dataType: 'json',
+                        success: function( data ) {
+                            var info = data;
+                            var html = baidu.template( 'apply', info ),
+                                pagenationHtml = baidu.template( 'pageNation', info );
+                            $('#applyContent').html( html );
+                            
+                            // 渲染分页
+                            $('#pagenationContent').html( pagenationHtml );
+                            
+                            // 渲染完成之后添加事件
+                            main.attachPagenation( info.totalPage );
+                        } 
+                    });  
+                });
+            });            
+        });
+    </script>        
+</body>
+</html>

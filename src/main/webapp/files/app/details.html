@@ -1,0 +1,147 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <title>schoolcheck</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    
+    <link rel="stylesheet" href="../bower_components/foundation/css/foundation.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    
+        <script src="../bower_components/requirejs/require.js"></script>
+        <script src="./scripts/template.js"></script>
+        <script src="../bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+
+</head>
+<body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">
+        您正在使用 <strong>过时的</strong> 浏览器. 请 
+            <a href="http://browsehappy.com/">升级您的浏览器</a> 
+        以便获得更好的使用体验以及相应的功能. </p>
+    <![endif]-->
+
+    <div class="main">
+        <header class="header check"></header>
+        <div class="body-content">
+            <div class="apply details">
+                <div class="info">
+                   
+                </div>                
+                <div class="center">
+                    <button class="button round" href="#" data-reveal-id="pass-check">通过审核</button>
+                    <button class="button round alert" href="#" data-reveal-id="reject-check">驳回审核</button>
+                </div>                
+			</div>
+        </div> 
+        <div class="footer">
+            <footer>
+                <small>
+                  <span class="copyright">武汉纺织大学&copy;版权所有</span>
+                  <span class="copyright">2015 All rights reserved!</span>
+                  <span class="copyright">阳光校区：武汉市江夏区阳光大道1号 邮政编码：430200</span>
+                  <span class="copyright">南湖校区：武汉市洪山区纺织路1号 邮政编码：430073</span>
+                  <span class="copyright">东湖校区：武汉市武昌区东湖梨园渔光村1号 邮政编码：430077</span>
+                </small>
+            </footer>
+        </div> 
+    </div>
+    
+    
+    <div id="notification"></div>        
+    <div id="pass-check" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
+        <h4 class="title icon">确认信息</h4>
+        <div class="money center">
+            <p>如果确认通过审核，请输入审批下发的项目经费</p>
+            <form action="/PrizeServer/passPrize" method="post" data-abide>
+                <input type="hidden" name="prize_id" value="">
+                <input type="hidden" name="handle_result" value="passed">
+                <p>
+                    <span class="icon money">&#xe63e;</span>
+                    <div class="input-wrapper">
+                        <input  class="inline-input" name="prize_price" 
+                            pattern="([0-9]+)|([0-9]\.[0-9]+)" placeholder="如果有项目经费，请输入金额"> 
+                        <small class="error">输入格式不正确，请输入数值或者带小数数值</small>    
+                    </div>
+                </p>    
+                <button class="button round">提交</button>
+            </form>
+            
+        </div>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+    <div id="reject-check" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
+        <h4 class="title icon">确认信息</h4>
+        <p class="center">确认驳回申请？</p>        
+        <div class="center">
+            <form action="/PrizeServer/passPrize" method="post">
+                <input type="hidden" name="prize_id" value="">
+                <input type="hidden" name="handle_result" value="reject">
+                <button class="button round">确认</button>
+                <button class="button round alert close-reveal-modal" id="cancel">取消</button>
+            </form>
+        </div>
+    </div> 
+    
+    <!-- template -->
+    <script id="info" type="text/html">
+        <h4 class="type" data-id="<%= prize_id %>"><%= prize_type %></h4>
+        <p class="name"><span class="icon">&#xe69e; </span><%= prize_name %></p>
+        <p class="academy"><span class="icon">&#xe621; </span><%= academy %></p>
+        <p class="class"><span class="icon">&#xe6de; </span><%= clazz %></p>
+        <p class="works"><span class="icon">&#xe7e2; </span><%= works_name %></p>
+        <p class="official"><span class="icon">&#xe676; </span><%= host_name %></p>
+        <div class="images">
+            <% for ( var i = 0; i < file_path.length; i++ ) { %>
+                <a href="../../images/<%= file_path[i] %>" target="_blank"><img src="../../images/<%= file_path[i] %>" class="big"></a>
+            <% } %>
+        </div>
+    </script>
+    <script>               
+        
+        require( ['./scripts/init'], function( exp ) {
+           var config = exp.config;
+           config( ['jquery', 'foundation', 'foundation_tab'], function( $ ) {
+               // 判断操作结果
+               if ( location.search.substring( 8, location.search.length ) === 'failed' ) {
+                    $('#notification').animate({
+                        'right': '0'
+                    }, 800)
+                    .text('操作失败！');
+                    setTimeout(function() {
+                        $('#notification').animate({
+                            'right': '-240px'
+                        }, 1000);                        
+                    }, 3000);
+                }
+                
+               var id = location.search.substring(4, location.search.length);
+               $.ajax({
+                   url: '/PrizeServer/getPrizeDetailById',
+                   method: "post",
+                   dataType: 'json',
+                   data: {
+                       prize_id: id
+                   },
+                   success: function( data ) {
+                       $('div.apply.details > div.info').html(
+                            baidu.template( 'info', data )
+                        );
+                       $(document).foundation();
+                       $('#pass-check').trigger('click');                
+                       id = $('div.apply.details > div.info .type').attr('data-id');
+                       $('#pass-check').find('form > input[name="prize_id"]').val( id );
+                       $('#reject-check').find('form > input[name="prize_id"]').val( id );                      
+                   }
+               });
+           }) ;
+        });
+    </script>
+</body>
+</html>

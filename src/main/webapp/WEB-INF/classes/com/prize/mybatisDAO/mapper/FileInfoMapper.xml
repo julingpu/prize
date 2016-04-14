@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prize.mybatisDAO.inte.FileInfoDAO">
+	<!-- <insert id="addFileInfo" parameterType="com.prize.entity.FileInfo">
+		insert into file_info(file_id,file_name,file_path,file_prize_id) values(#{file_id},#{file_name},#{file_path},#{file_prize_id})
+	</insert> -->
+</mapper>

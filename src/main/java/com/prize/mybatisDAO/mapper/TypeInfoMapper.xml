@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ <mapper namespace="com.prize.mybatisDAO.inte.TypeInfoDAO">
+
+  <resultMap type="com.prize.entity.TypeInfo" id="TypeInfoResult">
+		<id column="type_id" property="type_id" jdbcType="VARCHAR"/>
+		<result column = "type_name" property="type_name" jdbcType="VARCHAR"/>
+	</resultMap>
+<select id="getAllTypeInfo"  resultType="com.prize.entity.TypeInfo" >
+	select type_id,type_name from type_info
+</select>  
+<insert id="addTypeInfo" useGeneratedKeys="true" parameterType="com.prize.entity.TypeInfo">
+	insert into type_info(type_id,type_name) values(#{type_id},#{type_name})
+</insert>
+</mapper> 

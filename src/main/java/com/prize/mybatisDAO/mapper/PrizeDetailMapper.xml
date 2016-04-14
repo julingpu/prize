@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prize.mybatisDAO.inte.PrizeDetailDAO">
+	
+	<resultMap type="com.prize.entity.PrizeDetail" id="PrizeDetailResult">
+		<id column="prize_id" property="prize_id" jdbcType="VARCHAR"/>
+		<result column = "prize_type" property="prize_type" jdbcType="VARCHAR"/>
+		<result column="academy" property="academy" jdbcType="VARCHAR"/>
+		<result column="clazz" property="clazz" jdbcType="VARCHAR"/>
+		<result column="works_name" property="works_name" jdbcType="VARCHAR"/>
+		<result column="prize_name" property="prize_name" jdbcType="VARCHAR"/>
+		<result column="host_name" property="host_name" jdbcType="VARCHAR"/>
+		<result column="student_name" property="student_name" jdbcType="VARCHAR"/>
+		<result column="student_bank_card" property="student_bank_card" jdbcType="VARCHAR"/>
+		<result column="prize_price" property="prize_price" jdbcType="VARCHAR"/>
+		<result column="submit_time" property="submit_time" jdbcType="VARCHAR"/>
+		<result column="term_name" property="term_name" jdbcType="VARCHAR"/>
+		<result column="handle_time" property="handle_time" jdbcType="VARCHAR"/>
+		<result column="handle_result" property="handle_result" jdbcType="VARCHAR"/>
+	</resultMap>
+	<insert id="addPrizeDetail" parameterType="com.prize.entity.PrizeDetail">
+		insert into prize_detail
+		(prize_id,prize_type,academy,
+		clazz,works_name,
+		prize_name, host_name, 
+		student_name,
+		<if test="#{student_bank_card!=null}">
+		student_bank_card, 
+		</if>
+		prize_price,submit_time,
+		term_name,handle_time,
+		handle_result ) 
+		values 
+		(#{prize_id},#{prize_type},#{academy},#{clazz},#{works_name},#{prize_name},
+		
+		
+		#{host_name},#{student_name},
+		<if test="#{student_bank_card!=null}">
+		#{student_bank_card},
+		</if>
+		#{prize_price},#{submit_time}
+		
+		
+		,#{term_name},#{handle_time},#{handle_result})
+	
+	</insert>
+	
+	<select id="getPrizeDetailByMap" resultMap="PrizeDetailResult" resultType="list" parameterType="map">
+	select 
+	
+	prize_id,prize_type,academy,
+	clazz,works_name,
+	prize_name, host_name, 
+	student_name,student_bank_card, 
+	prize_price,submit_time,
+	term_name,handle_time,
+	handle_result 
+	
+	from prize_detail
+	
+	where 1 = 1
+	
+	<if test="prizeDetail!=null">
+		<if test="prizeDetail.prize_id!=null">
+			and prize_id = #{prizeDetail.prize_id}
+		</if>
+		<if test="prizeDetail.prize_type!=null">
+			and prize_type = #{prizeDetail.prize_type}
+		</if>
+		<if test="prizeDetail.handle_result!=null">
+			and handle_result = #{prizeDetail.handle_result}
+		</if>
+		<if test="prizeDetail.term_name!=null">
+			and term_name = #{prizeDetail.term_name}
+		</if>
+	</if>
+	order by submit_time desc
+	<if test="(begin!=null)&amp;&amp;(length!=null)">
+	<!-- 这里mybatis实际上会把#{}的内容替换成我们平常书写的sql语句中的？占位符  然后根据传进来的参数和#{}中的内容来进行预处理 -->
+		 limit #{begin},#{length}
+	</if>
+	</select>
+	<!-- 这里是生成excel时使用的 -->
+	<select id="getPrizeDetailByMap1" resultMap="PrizeDetailResult" resultType="list" parameterType="map">
+	select 
+	
+	prize_id,prize_type,academy,
+	clazz,works_name,
+	prize_name, host_name, 
+	student_name,student_bank_card, 
+	prize_price,submit_time,
+	term_name,handle_time,
+	handle_result 
+	
+	from prize_detail
+	
+	where 1 = 1
+	
+	<if test="prizeDetail!=null">
+		<if test="prizeDetail.prize_id!=null">
+			and prize_id = #{prizeDetail.prize_id}
+		</if>
+		<if test="prizeDetail.prize_type!=null">
+			and prize_type = #{prizeDetail.prize_type}
+		</if>
+		<if test="prizeDetail.handle_result!=null">
+			and handle_result = #{prizeDetail.handle_result}
+		</if>
+		<if test="prizeDetail.term_name!=null">
+			and term_name in ${prizeDetail.term_name}
+		</if>
+	</if>
+	order by submit_time desc
+	
+	</select>
+
+	<delete id="deleteById" parameterType="String">
+	delete from prize_detail where prize_id = #{_parameter}
+	</delete>
+</mapper>

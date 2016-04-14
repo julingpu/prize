@@ -1,0 +1,98 @@
+{
+	"apply": [
+		{ 
+			"id": "dgjag34235kj5325",
+			"title": "蓝灯志愿团关爱自闭症儿童公益创业计划",
+			"status": "passed",
+			"images": [
+				{ "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" }, 
+			    { "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" } 				
+			],
+			"academy": "数学与计算机学院",
+			"className": "软件11202",
+			"time": "2015-11-11 11:11"
+		},
+		{ 
+			"id": "dgjag34235kj5325",
+			"title": "蓝灯志愿团关爱自闭症儿童公益创业计划",
+			"status": "passed",
+			"images": [
+				{ "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" }, 
+			    { "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" } 				
+			],
+			"academy": "数学与计算机学院",
+			"className": "软件11202",
+			"time": "2015-11-11 11:11"
+		},
+		{ 
+			"id": "dgjag34235kj5325",
+			"title": "蓝灯志愿团关爱自闭症儿童公益创业计划",
+			"status": "passed",
+			"images": [
+				{ "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" }, 
+			    { "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" } 				
+			],
+			"academy": "数学与计算机学院",
+			"className": "软件11202",
+			"time": "2015-11-11 11:11"
+		},
+		{ 
+			"id": "dgjag34235kj5325",
+			"title": "蓝灯志愿团关爱自闭症儿童公益创业计划",
+			"status": "reject",
+			"images": [
+				{ "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" }, 
+			    { "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" } 				
+			],
+			"academy": "数学与计算机学院",
+			"className": "软件11202",
+			"time": "2015-11-11 11:11"
+		},
+		{ 
+			"id": "dgjag34235kj5325",
+			"title": "蓝灯志愿团关爱自闭症儿童公益创业计划",
+			"status": "passed",
+			"images": [
+				{ "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" }, 
+			    { "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" } 				
+			],
+			"academy": "数学与计算机学院",
+			"className": "软件11202",
+			"time": "2015-11-11 11:11"
+		},
+		{ 
+			"id": "dgjag34235kj5325",
+			"title": "蓝灯志愿团关爱自闭症儿童公益创业计划",
+			"status": "waiting",
+			"images": [
+				{ "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" }, 
+			    { "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" }, 
+				{ "src": "./images/证明.jpg" } 				
+			],
+			"academy": "数学与计算机学院",
+			"className": "软件11202",
+			"time": "2015-11-11 11:11"
+		}		
+	],
+	"page": {
+		"size": 6,
+		"currentPage": 6
+	}
+}

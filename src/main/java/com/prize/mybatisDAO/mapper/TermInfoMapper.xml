@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prize.mybatisDAO.inte.TermInfoDAO">
+<resultMap type="com.prize.entity.TermInfo" id="termInfoResultMap">
+	<id property="term_id" column="term_id" jdbcType="VARCHAR"/>
+	<result property="term_name" column="term_name" jdbcType="VARCHAR"/>
+	<result property="term_begin_time" column="term_begin_time" jdbcType="VARCHAR"/>
+	<result property="term_end_time" column="term_end_time" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="base_column">
+	term_id,term_name,term_begin_time,term_end_time
+</sql>
+
+<insert id="insert" parameterType="com.prize.entity.TermInfo" >
+
+  <selectKey keyProperty="term_id" resultType="String" order="BEFORE">  
+        select  replace(uuid(),'-','')   from dual  
+    </selectKey>
+	insert into term_info values(#{term_id},#{term_name},#{term_begin_time},#{term_end_time})
+</insert>
+
+<insert id="insertSelective" parameterType="com.prize.entity.TermInfo">
+	<selectKey keyProperty="term_id" resultType="String" order="BEFORE">  
+        select  replace(uuid(),'-','')   from dual  
+    </selectKey>
+	insert into term_info
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="term_id!=null">
+			term_id,
+		</if>
+		<if test="term_name!=null">
+			term_name,
+		</if>
+		<if test="term_begin_time!=null">
+			term_begin_time,
+		</if>
+		<if test="term_end_time!=null">
+			term_end_time,
+		</if>
+	</trim>
+	values
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="term_id!=null">
+			#{term_id},
+		</if>
+		<if test="term_name!=null">
+			#{term_name},
+		</if>
+		<if test="term_begin_time!=null">
+			#{term_begin_time},
+		</if>
+		<if test="term_end_time!=null">
+			#{term_end_time},
+		</if>
+	</trim>
+</insert>
+
+<delete id="deleteOne" parameterType="String">
+	delete from term_info where term_id = #{_parameter}
+</delete>
+
+<delete id = "deleteBatch" parameterType="java.util.List">
+	delete from term_info where term_id in 
+	(
+	<foreach collection="list"  item="item" separator=",">
+		#{item}
+	</foreach>
+	)
+</delete>
+
+<update id="update" parameterType="com.prize.entity.TermInfo" >
+	update term_info set
+	term_id = #{term_id},
+	term_name = #{term_name},
+	term_begin_time = #{term_begin_time},
+	term_end_time = #{term_end_time}
+	where term_id = #{term_id}
+</update>
+
+
+<update id="updateSelective" parameterType="com.prize.entity.TermInfo">
+	update term_info 
+	<set>
+		<if test="term_id!= null">
+			term_id = #{term_id},
+		</if>
+		<if test="term_name!= null">
+			term_name = #{term_name},
+		</if>
+		<if test="term_begin_time!= null">
+			term_begin_time = #{term_begin_time},
+		</if>
+		<if test="term_end_time!= null">
+			term_end_time = #{term_end_time},
+		</if>
+	</set>
+	where term_id = #{term_id}
+</update>
+
+<select id="selectOne" parameterType="String" resultType="com.prize.entity.TermInfo">
+	select
+	<include refid="base_column"/>
+	from term_info
+	where
+	term_id = #{_parameter}
+</select>
+<select id="select" parameterType="java.util.Map" resultType="java.util.List" resultMap="termInfoResultMap">
+	select
+	<include refid="base_column"/>
+	from term_info 
+	<where>
+		<if test="term_info!=null">
+		
+		
+		<if test="term_info.term_id!=null">
+		term_id = #{term_info.term_id} 
+		</if>
+		<if test="term_info.term_name!=null">
+		and term_name like '%${term_info.term_name}%'
+		</if>
+		<if test="term_info.term_begin_time!=null">
+		and term_begin_time = #{term_info.term_begin_time} 
+		</if>
+		<if test="term_info.term_end_time!=null">
+		and term_end_time = #{term_info.term_end_time}
+		</if>
+		</if>
+	</where>
+</select>
+
+</mapper>

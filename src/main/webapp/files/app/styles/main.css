@@ -1,0 +1,357 @@
+/* reset */
+body {
+  padding: 0;
+  margin: 0;  
+}
+
+button,
+input[tuype="file"],
+input[type="submit"] {
+  outline: none;
+}
+button.active {
+  background: #007095;  
+}
+
+small.error {
+  font-family: 'Microsoft Yahei', sans-serif;
+  margin-top: 10px;
+}
+
+/*--------------------common styles--------------------*/
+nav {
+    display: inline-block;
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    width: 80px;
+    text-align: center;
+}
+nav > ul {
+    display: inline-block;
+    padding: 0;
+    font-size: 0;
+}
+nav > ul > li.button.icon {
+    display: inline-block;
+    width: 100%;    
+    margin-bottom: 1px;
+    padding: 10px 0;
+}
+nav > ul > li.button.icon.active {
+    background: #007095;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+body {
+  background: #f4f4f4;
+  color: #333;  
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.browsehappy {
+  background: #ccc;
+  color: #000;
+  margin: 0.2em 0;
+  padding: 0.2em 0;
+}
+
+button.button.disabled {
+  cursor: not-allowed;
+}
+#cancel {
+  color: white;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1.2;
+  position: static;
+  top: 0;
+  right: 0;
+}
+
+div.reveal-modal > h4.title::before {
+  content: '\e70c';
+  display: inline-block;
+  height: 41px;
+  vertical-align: middle;
+}
+
+.hidden {
+  display: none;
+}
+
+label {
+  cursor: default;
+}
+
+span.tip {
+  color: red;
+}
+
+input.inline-input {
+  display: inline-block;
+  width: 20%;
+}
+
+@font-face {
+  font-family: 'icon-font';
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  src: url('../fonts/icomoon.eot');
+  src: url('../fonts/icomoon.eot?') format('embedded-opentype'),
+       url('../fonts/icomoon.woff') format('woff'),
+       url('../fonts/icomoon.ttf') format('truetype'),
+       url('../fonts/icomoon.svg') format('svg');  
+       
+}
+
+.center {
+  text-align: center;
+}
+
+.icon {
+  font-family: 'icon-font';
+  font-size: 24px;
+}
+span.money.icon {
+  font-size: 36px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+/*--------------------components--------------------*/
+/* 整体包装元素 */
+div.main {
+  margin: 0 auto;
+  width: 1024px;
+}
+
+/* 页头部分 */
+.header {  
+  display: block;
+  height: 155px;
+  width: 100%;
+}
+.post {
+  background: url('../images/post.png') no-repeat;  
+}
+.check {
+  background: url('../images/post_check.png') no-repeat;  
+}
+.settings {
+  background: url('../images/settings.png') no-repeat;    
+}
+.result {
+  background: url('../images/check_result.png') no-repeat;
+}
+
+/* 主体内容部分 */
+.body-content {
+  background: white;
+  margin-top: 40px;
+  padding: 20px 40px;
+  width: 100%;
+}
+ul.tabs > li.tab-title.default > a {
+  background: #61b6d9;
+  color: white;
+  font-family: 'Microsoft Yahei' sans-serif;
+}
+ul.tabs > li.tab-title.active > a {
+  background: #007095;
+  outline-color: white;
+}
+ul.tabs > li.tab-title > a:hover {
+  background: #007095;
+  outline-color: white;
+}
+
+div.image.icon {
+  width: 100px;
+  height: 100px;
+  font-size: 100px;
+  line-height: 100px;
+  margin-right: 10px;
+  color: gray;
+  transition: .6s 0s color ease-in-out;
+  display: inline-block;
+}
+div.image.icon::before {
+  content: '\e60d';
+}
+div.image.icon:hover {
+  color: #ddd;
+}
+span.delete.icon {
+  display: none;
+  position: absolute;
+  color: red;
+  font-size: 18px;
+  line-height: 18px;
+  margin-left: -20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+span.delete.icon.show {
+  display: inline-block;
+}
+span.delete.icon.show.inline {
+  position: static;
+  margin-left: 0;
+  margin-top: 0;
+  vertical-align: text-bottom;
+}
+span.delete.icon::before {  
+  content: '\e70d';
+}
+
+/* 过滤条件 */
+div.rules {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  border: dotted 1px gray;
+}
+label.icon.inline {
+  display: inline-block;
+  margin-left: 8px;  
+}
+.form-rule {
+  width: 45%;
+}
+a.more {
+  display: block;
+  margin: 0 auto;
+  width: 25%;
+}
+
+/* 申请 */
+div.apply {
+  padding: 10px 20px;
+  margin-bottom: 15px;
+  background: #eee;
+  color: black;  
+}
+div.apply:hover {
+  box-shadow: 0 0 4px 4px gray;
+}
+div.apply.passed {
+  background: url('../images/passed.png') no-repeat #f4f4f4 right top / 100px 100px;
+}
+div.apply > p.title::after {  
+  margin-left: 30px;
+  color: orange;
+  font-size: 18px;
+  font-family: 'Microsoft Yahei', sans-serif;
+}
+div.apply.reject > p.title::after {
+  content: '已驳回!!!';
+  color: red;  
+}
+div.apply.waiting > p.title::after {
+  content: '审核中...';
+}
+
+p.title {
+  line-height: 100%;
+  vertical-align: bottom;
+}
+p.title::before {
+  font-size: 21px;
+  content: '\e70c  ';
+}
+div.info > p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+div.info.details > p {
+  font-size: 16px;
+}
+div.info > p span.icon {
+  font-size: 12px;
+}
+
+/* 设置 */
+div.set {
+  border: dotted 1px black;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+}
+.item {
+  display: inline-block;
+  background: #f4f4f4;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+}
+.item:hover {
+  background: #61b6d9;
+  color: white;
+}
+
+img.normal {
+  width: 160px;  
+  margin-bottom: 20px;
+}
+img.big {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* 分页 */
+div.pagenation {
+  text-align: center;  
+}
+div.pagenation > ul {
+  margin: 0;
+}
+div.pagenation > ul > li{
+  display: inline-block;
+  background: white;
+  color: black;
+}
+div.pagenation > ul > li:hover{
+  background: #ccc;
+  color: black;
+}
+div.pagenation > ul > li.active{
+  background: #007095;
+  color: white;
+}
+
+/* 系统设置表单 */
+div.setForm {
+  padding-top: 10px;
+  margin-top: 20px;
+  border: solid #f4f4f4 1px;
+}
+
+/* 通知 */
+#notification {
+  width: 200px;
+  height: 100px;
+  color: black;
+  padding: 10px 20px;
+  background: white;
+  position: fixed;
+  right: -240px;
+  bottom: 0;
+  border-left: 10px solid #007095;
+  border-top: 1px solid #61b6d9;
+  border-bottom: 1px solid #61b6d9;
+}
+
+/* 页脚部分 */
+div.footer {
+  background: url('../images/footer.jpg') no-repeat;
+  color: gray;
+  display: block;
+  height: 110px;
+  margin-top: 40px;
+  padding: 10px 20px; 
+  text-align: center;
+  width: 100%;
+}
+.copyright {
+  display: block;
+}
