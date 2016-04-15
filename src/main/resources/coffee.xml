@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mvc>
+<coffee>
 	<!-- 设置controller层的包名 作用是扫描该包下所有类中使用了RequestMapping注解的方法-->
 	<param name="controllerPackage" value="com.prize.controller"/>
 	<!-- 设置entity层的包名   作用是扫描该包下所有的类  用于controller方法参数注入时参数自动转成实体-->
 	<param name="entityPackage" value="com.prize.entity"/>
-</mvc>
+</coffee>

@@ -1,5 +1,6 @@
 package com.prize.controller;
 
+import coffee.annotation.RequestMapping;
 import com.prize.entity.FileInfo;
 import com.prize.entity.PrizeDetail;
 import com.prize.entity.TermInfo;
@@ -11,10 +12,10 @@ import com.prize.mybatisDAO.inte.TypeInfoDAO;
 import com.prize.util.ExcelUtil;
 import com.prize.util.TimeUtil;
 import com.prize.util.UUIDUtil;
-import mvc.fileUpload.MultipartFile;
-import mvc.view.HtmlView;
-import mvc.view.JsonView;
-import mvc.view.ModelAndView;
+import coffee.fileUpload.MultipartFile;
+import coffee.view.HtmlView;
+import coffee.view.JsonView;
+import coffee.view.ModelAndView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import mvc.annotation.*;
 
 //如果需要把controller层中的bean交给spring管理  必须添加controller获取其他相关的注解
 @Controller
@@ -71,10 +71,7 @@ public class PrizeDetailController {
 		else
 			return new JsonView(false);
 	}
-	@RequestMapping(type = "post", url = "/PrizeServer/addPrizeDetail")
-	public void test(){
 
-	}
 	/**
 	 * 学生提交获奖信息
 	 * @param prizeDetail
@@ -324,7 +321,7 @@ public class PrizeDetailController {
 	 * @param term_id
 	 * @return
 	 */
-	@RequestMapping(type = "get", url = "/PrizeServer/deleteTermInfo")
+	@RequestMapping(type = "post", url = "/PrizeServer/deleteTermInfo")
 	public ModelAndView deleteTermInfo(String term_id){
 		if(termInfoDAO.deleteOne(term_id)==1)
 			return new HtmlView("/files/app/settings.html?result=success");

@@ -20,8 +20,8 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>com.julingpu</groupId>
-			<artifactId>mvc</artifactId>
+			<groupId>org.julingpu</groupId>
+			<artifactId>coffee</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<!-- servlet -->

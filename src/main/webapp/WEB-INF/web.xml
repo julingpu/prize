@@ -44,8 +44,8 @@
 
 
 	<servlet>
-		<servlet-name>MVC</servlet-name>
-		<servlet-class>mvc.dispatcher.DispatcherServlet</servlet-class>
+		<servlet-name>coffee</servlet-name>
+		<servlet-class>coffee.dispatcher.DispatcherServlet</servlet-class>
 
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -89,7 +89,7 @@
 
  	<!-- 所有的请求DispatcherServlet来处理  不能写成/* 这样jsp也会被拦截 -->
  	<servlet-mapping>
-		<servlet-name>MVC</servlet-name>
+		<servlet-name>coffee</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
