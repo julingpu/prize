@@ -5,10 +5,10 @@
     <title>schoolcheck</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    
+
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <!-- endbower -->
@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
     <!-- build:js scripts/vendor/modernizr.js -->
-    
+
     <script src="../bower_components/requirejs/require.js"></script>
     <script src="./scripts/template.js"></script>
     <!-- endbuild -->
@@ -27,19 +27,32 @@
 <body>
     <!--[if lt IE 10]>
       <p class="browsehappy">
-        您正在使用 <strong>过时的</strong> 浏览器. 请 
-            <a href="http://browsehappy.com/">升级您的浏览器</a> 
+        您正在使用 <strong>过时的</strong> 浏览器. 请
+            <a href="http://browsehappy.com/">升级您的浏览器</a>
         以便获得更好的使用体验以及相应的功能. </p>
     <![endif]-->
-
+    <nav id="navigation">
+      <ul>
+        <li class="button icon waiting" title="未审核项目"
+            onclick="window.location.href = './uncheck.html'">&#xe707;</li>
+        <li class="button icon list active" title="项目列表"
+            onclick="window.location.href = './checkInfo.html'">&#xe6ba;</li>
+        <li class="button icon setting " title="系统设置"
+            onclick="window.location.href = './settings.html'">&#xe695;</li>
+        <li class="button icon download" title="下载office world文档"
+            href="#" data-reveal-id="year-check">&#xe6c7;</li>
+        <li class="button icon exit" title="安全退出"
+            onclick="window.location.href = '/PrizeServer/logout'">&#xe6c7;</li>
+      </ul>
+    </nav>
     <div class="main">
         <header class="header result"></header>
-        <div class="body-content">            
-            <div id="applyContent">                
+        <div class="body-content">
+            <div id="applyContent">
             </div>
-            <div id="pagenationContent" class="pagenation">                
+            <div id="pagenationContent" class="pagenation">
             </div>
-        </div> 
+        </div>
         <div class="footer">
             <footer>
                 <small>
@@ -50,11 +63,11 @@
                   <span class="copyright">东湖校区：武汉市武昌区东湖梨园渔光村1号 邮政编码：430077</span>
                 </small>
             </footer>
-        </div> 
+        </div>
     </div>
-    
+
     <div id="notification"></div>
-    
+
     <!-- JavaScript Template -->
     <script id="apply" type="text/html">
         <% for ( var i = 0; i < prizeList.length; i++ ) { %>
@@ -62,73 +75,75 @@
                 <p class="title icon"><%=prizeList[i].prize_type + prizeList[i].prize_name%></p>
                 <div class="description">
                     <% for ( var j = 0; j < prizeList[i].file_path.length; j++ ) { %>
-                        <img src="../../images/<%=prizeList[i].file_path[j] %>" class="normal" 
-                            title="<%=prizeList[i].prize_name %>">    
-                    <% } %>                                        
+                        <img src="../../images/<%=prizeList[i].file_path[j] %>" class="normal"
+                            title="<%=prizeList[i].prize_name %>">
+                    <% } %>
                     <div class="info">
                         <p class="academy"><span class="icon">&#xe621; </span><%=prizeList[i].academy %></p>
                         <p class="className"><span class="icon">&#xe6de; </span><%=prizeList[i].clazz %></p>
                         <p class="time"><span class="icon">&#xe64e; </span> <%=prizeList[i].submit_time %></p>
                     </div>
                 </div>
-            </div>        
-        <% } %>   
+              <a class="button round more"
+                 href="details.html?id=<%=prizeList[i].prize_id%>" target="_blank">查看详情</a>
+            </div>
+        <% } %>
     </script>
-    
+
     <script id="pageNation" type="text/html">
         <ul>
             <li class="button round small prev">&lt;&lt;</li>
             <% if ( totalPage <= 1 ) { %>
-                <li class="button round small active">1</li>                
+                <li class="button round small active">1</li>
             <% } else if ( totalPage > 1 && totalPage <= 5 ) {
-                 for ( var i = 0; i < totalPage; i++ ) { 
+                 for ( var i = 0; i < totalPage; i++ ) {
                      if ( i + 1 == currentPage ) { %>
                         <li class="button round small active"><%= i+1 %></li>
                     <% } else { %>
                         <li class="button round small"><%= i+1 %></li>
-                    <% } 
-                 }     
-             } else if ( totalPage > 5 ) { 
+                    <% }
+                 }
+             } else if ( totalPage > 5 ) {
                 if ( currentPage >= 3 && currentPage <= totalPage - 2 ) { %>
                     <li class="button round small"><%= currentPage - 2 %></li>
                     <li class="button round small"><%= currentPage - 1 %></li>
                     <li class="button round small active"><%= currentPage %></li>
                     <li class="button round small"><%= currentPage + 1 %></li>
                     <li class="button round small"><%= currentPage + 2 %></li>
-               <% } else if ( currentPage == 1 || currentPage == 2 ) { 
+               <% } else if ( currentPage == 1 || currentPage == 2 ) {
                    if ( currentPage == 1 ) { %>
-                       <li class="button round small active">1</li>                       
+                       <li class="button round small active">1</li>
                        <li class="button round small">2</li>
                    <% } else { %>
-                       <li class="button round small">1</li>                       
+                       <li class="button round small">1</li>
                        <li class="button round small active">2</li>
                    <% } %>
                    <li class="button round small">3</li>
                    <li class="button round small">4</li>
-                   <li class="button round small">5</li>                   
-               <% } else if ( 
-                   currentPage == totalPage - 1 || 
+                   <li class="button round small">5</li>
+               <% } else if (
+                   currentPage == totalPage - 1 ||
                    currentPage == totalPage ) { %>
                    <li class="button round small"><%= totalPage - 4 %></li>
                    <li class="button round small"><%= totalPage - 3 %></li>
-                   <li class="button round small"><%= totalPage - 2 %></li> 
+                   <li class="button round small"><%= totalPage - 2 %></li>
                    <% if ( currentPage == totalPage - 1 ) { %>
-                       <li class="button round small active"><%= totalPage - 1 %></li>                       
+                       <li class="button round small active"><%= totalPage - 1 %></li>
                        <li class="button round small"><%= totalPage %></li>
                    <% } else { %>
-                       <li class="button round small"><%= totalPage - 1 %></li>                       
+                       <li class="button round small"><%= totalPage - 1 %></li>
                        <li class="button round small active"><%= totalPage %></li>
-                   <% }              
+                   <% }
                  }
              } %>
             <li class="button round small next">&gt;&gt;</li>
-        </ul>        
+        </ul>
     </script>
-        
+
     <script>
         require( ['./scripts/init'], function( exp ) {
-            var config = exp.config;                        
-                        
+            var config = exp.config;
+
             // 渲染页面中的所有申请
             config( ['jquery', 'user/main'], function( $, main ) {
                  // 首先判断提交结果
@@ -140,10 +155,10 @@
                     setTimeout(function() {
                         $('#notification').animate({
                             'right': '-240px'
-                        }, 1000);                        
+                        }, 1000);
                     }, 3000);
                 }
-                
+
                 $.ajax({
                     url: '/PrizeServer/getPrizeByTerm', //'./test/applies.json'
                     method: 'get',
@@ -159,17 +174,32 @@
                         var html = baidu.template( 'apply', info ),
                             pagenationHtml = baidu.template( 'pageNation', info );
                         $('#applyContent').html( html );
-                        
+
                         // 渲染分页
                         $('#pagenationContent').html( pagenationHtml );
-                        
+
                         // 渲染完成之后添加事件
                         main.attachPagenation( info.totalPage );
-                    } 
-                });                                       
-            });            
+                    }
+                });
+              //判断是否登录  如果是登录状态才显示导航栏
+              $.ajax({
+                url: '/PrizeServer/hasLogin', //'./test/applies.json'
+                method: 'get',
+                dataType: 'json',
+                data: {
+                },
+                success: function( data ) {
+                  if(data == true){
+                    $("#navigation").show();
+                  }else{
+                    $("#navigation").hide();
+                  }
+                }
+              });
+            });
         });
     </script>
-    
+
 </body>
 </html>

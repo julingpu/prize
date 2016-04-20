@@ -5,14 +5,14 @@
     <title>schoolcheck</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    
+
     <link rel="stylesheet" href="../bower_components/foundation/css/foundation.min.css">
     <link rel="stylesheet" href="styles/main.css">
-    
+
         <script src="../bower_components/requirejs/require.js"></script>
         <script src="./scripts/template.js"></script>
         <script src="../bower_components/modernizr/modernizr.js"></script>
@@ -22,24 +22,37 @@
 <body>
     <!--[if lt IE 10]>
       <p class="browsehappy">
-        您正在使用 <strong>过时的</strong> 浏览器. 请 
-            <a href="http://browsehappy.com/">升级您的浏览器</a> 
+        您正在使用 <strong>过时的</strong> 浏览器. 请
+            <a href="http://browsehappy.com/">升级您的浏览器</a>
         以便获得更好的使用体验以及相应的功能. </p>
     <![endif]-->
-
+    <nav>
+      <ul>
+        <li class="button icon waiting" title="未审核项目"
+            onclick="window.location.href = './uncheck.html'">&#xe707;</li>
+        <li class="button icon list" title="项目列表"
+            onclick="window.location.href = './checkInfo.html'">&#xe6ba;</li>
+        <li class="button icon setting " title="系统设置"
+            onclick="window.location.href = './settings.html'">&#xe695;</li>
+        <li class="button icon download" title="下载office world文档"
+            href="#" data-reveal-id="year-check">&#xe6c7;</li>
+        <li class="button icon exit" title="安全退出"
+            onclick="window.location.href = '/PrizeServer/logout'">&#xe6c7;</li>
+      </ul>
+    </nav>
     <div class="main">
         <header class="header check"></header>
         <div class="body-content">
             <div class="apply details">
                 <div class="info">
-                   
-                </div>                
-                <div class="center">
-                    <button class="button round" href="#" data-reveal-id="pass-check">通过审核</button>
-                    <button class="button round alert" href="#" data-reveal-id="reject-check">驳回审核</button>
-                </div>                
+
+                </div>
+              <div class="center">
+                <button class="button round" href="#" data-reveal-id="pass-check">通过审核</button>
+                <button class="button round alert" href="#" data-reveal-id="reject-check">驳回审核</button>
+              </div>
 			</div>
-        </div> 
+        </div>
         <div class="footer">
             <footer>
                 <small>
@@ -50,11 +63,11 @@
                   <span class="copyright">东湖校区：武汉市武昌区东湖梨园渔光村1号 邮政编码：430077</span>
                 </small>
             </footer>
-        </div> 
+        </div>
     </div>
-    
-    
-    <div id="notification"></div>        
+
+
+    <div id="notification"></div>
     <div id="pass-check" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
         <h4 class="title icon">确认信息</h4>
         <div class="money center">
@@ -65,20 +78,20 @@
                 <p>
                     <span class="icon money">&#xe63e;</span>
                     <div class="input-wrapper">
-                        <input  class="inline-input" name="prize_price" 
-                            pattern="([0-9]+)|([0-9]\.[0-9]+)" placeholder="如果有项目经费，请输入金额"> 
-                        <small class="error">输入格式不正确，请输入数值或者带小数数值</small>    
+                        <input  class="inline-input" name="prize_price"
+                            pattern="([0-9]+)|([0-9]\.[0-9]+)" placeholder="如果有项目经费，请输入金额">
+                        <small class="error">输入格式不正确，请输入数值或者带小数数值</small>
                     </div>
-                </p>    
+                </p>
                 <button class="button round">提交</button>
             </form>
-            
+
         </div>
         <a class="close-reveal-modal" aria-label="Close">&#215;</a>
     </div>
     <div id="reject-check" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
         <h4 class="title icon">确认信息</h4>
-        <p class="center">确认驳回申请？</p>        
+        <p class="center">确认驳回申请？</p>
         <div class="center">
             <form action="/PrizeServer/passPrize" method="post">
                 <input type="hidden" name="prize_id" value="">
@@ -87,8 +100,8 @@
                 <button class="button round alert close-reveal-modal" id="cancel">取消</button>
             </form>
         </div>
-    </div> 
-    
+    </div>
+
     <!-- template -->
     <script id="info" type="text/html">
         <h4 class="type" data-id="<%= prize_id %>"><%= prize_type %></h4>
@@ -97,14 +110,35 @@
         <p class="class"><span class="icon">&#xe6de; </span><%= clazz %></p>
         <p class="works"><span class="icon">&#xe7e2; </span><%= works_name %></p>
         <p class="official"><span class="icon">&#xe676; </span><%= host_name %></p>
+
+        <p class="official"><span class="icon">&#xe676; </span>
+       <%
+          if(handle_result=="waiting"){
+        %>
+        未审核
+          <%
+         }
+          else if(handle_result=="reject"){
+          %>
+          申请被驳回
+          <%
+         }else{
+          %>
+          申请审核通过
+          <%
+          }
+          %>
+        </p>
+        </p>
         <div class="images">
             <% for ( var i = 0; i < file_path.length; i++ ) { %>
                 <a href="../../images/<%= file_path[i] %>" target="_blank"><img src="../../images/<%= file_path[i] %>" class="big"></a>
             <% } %>
         </div>
+
     </script>
-    <script>               
-        
+    <script>
+
         require( ['./scripts/init'], function( exp ) {
            var config = exp.config;
            config( ['jquery', 'foundation', 'foundation_tab'], function( $ ) {
@@ -117,10 +151,10 @@
                     setTimeout(function() {
                         $('#notification').animate({
                             'right': '-240px'
-                        }, 1000);                        
+                        }, 1000);
                     }, 3000);
                 }
-                
+
                var id = location.search.substring(4, location.search.length);
                $.ajax({
                    url: '/PrizeServer/getPrizeDetailById',
@@ -134,12 +168,31 @@
                             baidu.template( 'info', data )
                         );
                        $(document).foundation();
-                       $('#pass-check').trigger('click');                
+                       $('#pass-check').trigger('click');
                        id = $('div.apply.details > div.info .type').attr('data-id');
                        $('#pass-check').find('form > input[name="prize_id"]').val( id );
-                       $('#reject-check').find('form > input[name="prize_id"]').val( id );                      
+                       $('#reject-check').find('form > input[name="prize_id"]').val( id );
                    }
                });
+
+             //判断是否登录  如果是登录状态才显示导航栏
+             $.ajax({
+               url: '/PrizeServer/hasLogin', //'./test/applies.json'
+               method: 'get',
+               dataType: 'json',
+               data: {
+               },
+               success: function( data ) {
+                 if(data == true){
+                   $(".center").show();
+                   $("nav").show();
+                 }else{
+                   $(".center").hide();
+                   $("nav").hide();
+                 }
+               }
+             });
+
            }) ;
         });
     </script>

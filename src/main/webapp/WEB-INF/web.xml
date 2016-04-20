@@ -40,12 +40,26 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	<!-- 注册SpringMVC容器  管理controller等组件-->
 
+	<listener>
+		<listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+	</listener>
+	<filter>
+		<filter-name>ShiroFilter</filter-name>
+		<filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>ShiroFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<servlet>
 		<servlet-name>coffee</servlet-name>
 		<servlet-class>coffee.dispatcher.DispatcherServlet</servlet-class>
+
+
+
+
 
 		<load-on-startup>1</load-on-startup>
 	</servlet>

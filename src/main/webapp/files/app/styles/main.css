@@ -1,7 +1,7 @@
 /* reset */
 body {
   padding: 0;
-  margin: 0;  
+  margin: 0;
 }
 
 button,
@@ -10,7 +10,7 @@ input[type="submit"] {
   outline: none;
 }
 button.active {
-  background: #007095;  
+  background: #007095;
 }
 
 small.error {
@@ -34,7 +34,7 @@ nav > ul {
 }
 nav > ul > li.button.icon {
     display: inline-block;
-    width: 100%;    
+    width: 100%;
     margin-bottom: 1px;
     padding: 10px 0;
 }
@@ -45,7 +45,7 @@ nav > ul > li.button.icon.active {
 
 body {
   background: #f4f4f4;
-  color: #333;  
+  color: #333;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -102,8 +102,8 @@ input.inline-input {
   src: url('../fonts/icomoon.eot?') format('embedded-opentype'),
        url('../fonts/icomoon.woff') format('woff'),
        url('../fonts/icomoon.ttf') format('truetype'),
-       url('../fonts/icomoon.svg') format('svg');  
-       
+       url('../fonts/icomoon.svg') format('svg');
+
 }
 
 .center {
@@ -124,27 +124,31 @@ span.money.icon {
 /*--------------------components--------------------*/
 /* 整体包装元素 */
 div.main {
+
   margin: 0 auto;
   width: 1024px;
 }
 
 /* 页头部分 */
-.header {  
+.header {
   display: block;
   height: 155px;
   width: 100%;
 }
 .post {
-  background: url('../images/post.png') no-repeat;  
+  background: url('../images/post.png') no-repeat;
 }
 .check {
-  background: url('../images/post_check.png') no-repeat;  
+  background: url('../images/post_check.png') no-repeat;
 }
 .settings {
-  background: url('../images/settings.png') no-repeat;    
+  background: url('../images/settings.png') no-repeat;
 }
 .result {
   background: url('../images/check_result.png') no-repeat;
+}
+.login {
+  background: url('../images/login.png') no-repeat;
 }
 
 /* 主体内容部分 */
@@ -203,7 +207,7 @@ span.delete.icon.show.inline {
   margin-top: 0;
   vertical-align: text-bottom;
 }
-span.delete.icon::before {  
+span.delete.icon::before {
   content: '\e70d';
 }
 
@@ -215,7 +219,7 @@ div.rules {
 }
 label.icon.inline {
   display: inline-block;
-  margin-left: 8px;  
+  margin-left: 8px;
 }
 .form-rule {
   width: 45%;
@@ -231,7 +235,7 @@ div.apply {
   padding: 10px 20px;
   margin-bottom: 15px;
   background: #eee;
-  color: black;  
+  color: black;
 }
 div.apply:hover {
   box-shadow: 0 0 4px 4px gray;
@@ -239,7 +243,7 @@ div.apply:hover {
 div.apply.passed {
   background: url('../images/passed.png') no-repeat #f4f4f4 right top / 100px 100px;
 }
-div.apply > p.title::after {  
+div.apply > p.title::after {
   margin-left: 30px;
   color: orange;
   font-size: 18px;
@@ -247,7 +251,7 @@ div.apply > p.title::after {
 }
 div.apply.reject > p.title::after {
   content: '已驳回!!!';
-  color: red;  
+  color: red;
 }
 div.apply.waiting > p.title::after {
   content: '审核中...';
@@ -290,7 +294,7 @@ div.set {
 }
 
 img.normal {
-  width: 160px;  
+  width: 160px;
   margin-bottom: 20px;
 }
 img.big {
@@ -300,7 +304,7 @@ img.big {
 
 /* 分页 */
 div.pagenation {
-  text-align: center;  
+  text-align: center;
 }
 div.pagenation > ul {
   margin: 0;
@@ -348,7 +352,7 @@ div.footer {
   display: block;
   height: 110px;
   margin-top: 40px;
-  padding: 10px 20px; 
+  padding: 10px 20px;
   text-align: center;
   width: 100%;
 }

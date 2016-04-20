@@ -16,6 +16,10 @@ import coffee.fileUpload.MultipartFile;
 import coffee.view.HtmlView;
 import coffee.view.JsonView;
 import coffee.view.ModelAndView;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,24 +56,49 @@ public class PrizeDetailController {
 	@Autowired 
 	TypeInfoDAO typeInfoDAO;
 
-	@RequestMapping(type = "get", url = "/getAll")
-	public ModelAndView getAllPrizeDetail(HttpServletRequest request){
-		HashMap<String,Object> map = new HashMap<String,Object>();//pageSize
-		logger.info("pageSize:"+pageSize);
-		logger.info("prizeDetailDAO:"+prizeDetailDAO);
-		map.put("value", prizeDetailDAO.getPrizeDetailByMap(map));
-		JsonView jsonView = new JsonView(map);
-		return jsonView;
+	/**
+	 * 用户登录  这里使用shiro安全框架
+	 * @param username
+	 * @param password
+     * @return
+     */
+	@RequestMapping(type = "post", url = "/PrizeServer/login")
+	public ModelAndView login(String username,String password){
+		Subject subject = SecurityUtils.getSubject();
+		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+		try{
+			subject.login(token);
+		}catch (AuthenticationException e){
+			HtmlView htmlView = new HtmlView("/files/app/login.html");
+			return htmlView;
+		}
+		HtmlView htmlView = new HtmlView("/files/app/settings.html");
+		return htmlView;
 	}
-	@RequestMapping(type = "get", url = "/deleteById")
-	public ModelAndView deleteById(String id){
-		HashMap<String,Object> map = new HashMap<String,Object>();
-		//result代表更新的记录条数
-		int result = prizeDetailDAO.deleteById(id);
-		if(result==1)
-			return new JsonView(true);
-		else
-			return new JsonView(false);
+
+
+	/**
+	 * 用户登出
+	 * @param username
+	 * @param password
+     * @return
+     */
+	@RequestMapping(type = "get", url = "/PrizeServer/logout")
+	public ModelAndView logout(String username,String password){
+		Subject subject = SecurityUtils.getSubject();
+		subject.logout();
+		HtmlView htmlView = new HtmlView("/files/app/login.html");
+		return htmlView;
+	}
+
+	/**
+	 * 判断用户是否登录
+	 * @return
+     */
+	@RequestMapping(type = "get", url = "/PrizeServer/hasLogin")
+	public ModelAndView hasLogin(){
+		Subject subject = SecurityUtils.getSubject();
+		return  new JsonView(subject.isAuthenticated());
 	}
 
 	/**
@@ -366,4 +395,27 @@ public class PrizeDetailController {
 		FileCopyUtils.copy(new FileInputStream(new File(filePath)),response.getOutputStream());
 		
 	}
+
+
+
+	@RequestMapping(type = "get", url = "/getAll")
+	public ModelAndView getAllPrizeDetail(HttpServletRequest request){
+		HashMap<String,Object> map = new HashMap<String,Object>();//pageSize
+		logger.info("pageSize:"+pageSize);
+		logger.info("prizeDetailDAO:"+prizeDetailDAO);
+		map.put("value", prizeDetailDAO.getPrizeDetailByMap(map));
+		JsonView jsonView = new JsonView(map);
+		return jsonView;
+	}
+	@RequestMapping(type = "get", url = "/deleteById")
+	public ModelAndView deleteById(String id){
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		//result代表更新的记录条数
+		int result = prizeDetailDAO.deleteById(id);
+		if(result==1)
+			return new JsonView(true);
+		else
+			return new JsonView(false);
+	}
+
 }

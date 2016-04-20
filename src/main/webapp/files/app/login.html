@@ -1,0 +1,70 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <title>schoolcheck</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <!-- build:js scripts/vendor/modernizr.js -->
+
+    <script src="../bower_components/requirejs/require.js"></script>
+    <script src="./scripts/template.js"></script>
+    <!-- endbuild -->
+  <link rel="stylesheet" type="text/css" href="styles/reset.css">
+  <link rel="stylesheet" type="text/css" href="styles/structure.css">
+</head>
+<body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">
+        您正在使用 <strong>过时的</strong> 浏览器. 请
+            <a href="http://browsehappy.com/">升级您的浏览器</a>
+        以便获得更好的使用体验以及相应的功能. </p>
+    <![endif]-->
+
+    <div class="main" style="background: url('images/background.png') no-repeat">
+        <header class="header login"></header>
+      <div class="">
+      <form class="box login" method="post" action="/PrizeServer/login">
+        <fieldset class="boxBody">
+          <label>Username</label>
+          <input type="text" name="username" tabindex="1" placeholder="PremiumPixel" required>
+          <label><a href="#" class="rLink" tabindex="5">Forget your password?</a>Password</label>
+          <input type="password" name="password" tabindex="2" required>
+        </fieldset>
+        <footer>
+          <label><input type="checkbox" tabindex="3">Keep me logged in</label>
+          <input type="submit" class="btnLogin" value="Login" tabindex="4">
+        </footer>
+      </form>
+      </div>
+        <div class="footer">
+            <footer>
+                <small>
+                  <span class="copyright">武汉纺织大学&copy;版权所有</span>
+                  <span class="copyright">2015 All rights reserved!</span>
+                  <span class="copyright">阳光校区：武汉市江夏区阳光大道1号 邮政编码：430200</span>
+                  <span class="copyright">南湖校区：武汉市洪山区纺织路1号 邮政编码：430073</span>
+                  <span class="copyright">东湖校区：武汉市武昌区东湖梨园渔光村1号 邮政编码：430077</span>
+                </small>
+            </footer>
+        </div>
+    </div>
+
+
+
+
+
+</body>
+</html>
