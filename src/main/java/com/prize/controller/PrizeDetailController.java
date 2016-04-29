@@ -69,7 +69,7 @@ public class PrizeDetailController {
 		try{
 			subject.login(token);
 		}catch (AuthenticationException e){
-			HtmlView htmlView = new HtmlView("/files/app/login.html");
+			HtmlView htmlView = new HtmlView("/files/app/login.html?result=failed");
 			return htmlView;
 		}
 		HtmlView htmlView = new HtmlView("/files/app/settings.html");
@@ -129,11 +129,11 @@ public class PrizeDetailController {
 			} catch (ParseException e) {
 				e.printStackTrace();
 				logger.error("数据库学期时间错误");
-				return new HtmlView("redirect:/files/app/index.html?result=failed");
+				return new HtmlView("/files/app/index.html?result=failed");
 			}
 		}
 		if(prizeDetail.term_name==null||"".equals(prizeDetail.term_name))
-			return new HtmlView("redirect:/files/app/index.html?result=failed");
+			return new HtmlView("/files/app/index.html?result=failed");
 		prizeDetail.submit_time = submit_time;
 		//设置处理状态为审核中
 		prizeDetail.handle_result = "waiting";
@@ -171,7 +171,7 @@ public class PrizeDetailController {
 			return new HtmlView("/files/app/checkInfo.html?result=success");
 		}
 		else
-			return new HtmlView("redirect:/files/app/index.html?result=failed");
+			return new HtmlView("/files/app/index.html?result=failed");
 	}
 	
 	/**
@@ -191,7 +191,6 @@ public class PrizeDetailController {
 					prizeDetail.term_name = termInfo.term_name;
 				}
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				logger.error("数据库学期时间错误");
 				e.printStackTrace();
 			}
@@ -252,7 +251,6 @@ public class PrizeDetailController {
 					prizeDetail.term_name = termInfo.term_name;
 				}
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				logger.error("数据库学期时间错误");
 				e.printStackTrace();
 			}
@@ -380,7 +378,7 @@ public class PrizeDetailController {
 		logger.info("生成excel文件中...");
 		ExcelUtil.createExcel(year);
 		logger.info("excel文件生成完毕");
-		String filePath =  System.getProperty("user.dir")+File.separator+"test.xls";
+		String filePath =  System.getProperty("user.dir")+File.separator+year+"年度获奖信息整理文档.xls";
 		String fileName = filePath.substring(filePath.lastIndexOf(File.separator));
 		//不能解决中文字体问题
 		response.setCharacterEncoding("utf-8");
@@ -393,7 +391,6 @@ public class PrizeDetailController {
 		logger.info("filePath:"+filePath);
 		//根据给定的文件名创建输入流  然后输入到response的输出流中去   同时要设定response的媒体类型   然后生成响应报文传给浏览器
 		FileCopyUtils.copy(new FileInputStream(new File(filePath)),response.getOutputStream());
-		
 	}
 
 

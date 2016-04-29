@@ -53,14 +53,13 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+	<session-config>
+		<session-timeout>10</session-timeout>
+	</session-config>
+
 	<servlet>
 		<servlet-name>coffee</servlet-name>
 		<servlet-class>coffee.dispatcher.DispatcherServlet</servlet-class>
-
-
-
-
-
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<!-- 当请求时下面指定的后缀名时交给tomcat默认的servlet来执行 -->

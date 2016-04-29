@@ -61,7 +61,6 @@ public class TimeUtil {
 			long newTime =simpleDateFormat.parse(time).getTime()+3*24*60*60*1000;
 			return simpleDateFormat.format(new Date(newTime));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -84,7 +83,6 @@ public class TimeUtil {
 			else
 				return true;
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}

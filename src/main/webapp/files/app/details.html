@@ -26,7 +26,7 @@
             <a href="http://browsehappy.com/">升级您的浏览器</a>
         以便获得更好的使用体验以及相应的功能. </p>
     <![endif]-->
-    <nav>
+    <nav id="navigation">
       <ul>
         <li class="button icon waiting" title="未审核项目"
             onclick="window.location.href = './uncheck.html'">&#xe707;</li>
@@ -34,7 +34,7 @@
             onclick="window.location.href = './checkInfo.html'">&#xe6ba;</li>
         <li class="button icon setting " title="系统设置"
             onclick="window.location.href = './settings.html'">&#xe695;</li>
-        <li class="button icon download" title="下载office world文档"
+        <li class="button icon download" title="下载excel文档"
             href="#" data-reveal-id="year-check">&#xe6c7;</li>
         <li class="button icon exit" title="安全退出"
             onclick="window.location.href = '/PrizeServer/logout'">&#xe6c7;</li>
@@ -137,11 +137,29 @@
         </div>
 
     </script>
+    <div id="year-check" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
+      <h4 class="title icon">确认信息</h4>
+      <div class="money center">
+        <p>请输入要打印的项目列表的年份</p>
+        <form action="/PrizeServer/download" method="get" data-abide>
+          <p>
+          <div class="input-wrapper">
+            <input type="text" class="inline-input" name="year" required="required">
+          </div>
+          </p>
+          <button type="submit" class="button round">提交</button>
+        </form>
+
+      </div>
+      <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
     <script>
 
         require( ['./scripts/init'], function( exp ) {
            var config = exp.config;
+
            config( ['jquery', 'foundation', 'foundation_tab'], function( $ ) {
+             $(document).foundation();
                // 判断操作结果
                if ( location.search.substring( 8, location.search.length ) === 'failed' ) {
                     $('#notification').animate({
@@ -196,5 +214,6 @@
            }) ;
         });
     </script>
+
 </body>
 </html>
